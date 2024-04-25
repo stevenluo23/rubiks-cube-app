@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        lcd: ["LCD", "sans-serif"],
+        lcd: ["LCD", "Consolas"],
       },
     },
   },
