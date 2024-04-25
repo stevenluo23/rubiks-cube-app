@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply h-screen flex justify-center items-center;
+  html {
+    @apply font-mono;
   }
+}
+
+@font-face {
+  font-family: "LCD";
+  src: url("./src/assets/fonts/digital-7 (mono).ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

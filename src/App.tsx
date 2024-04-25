@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Timer from "./components/timer/Timer";
+import Scramble from "./components/scramble/Scramble";
 
 function App() {
-  const [time, setTime] = useState<number>(0);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-
-  useEffect(() => {}, []);
-
+  const [solves, setSolves] = useState<number>(0);
   return (
-    <div className="rounded-3xl bg-slate-400 p-5">
-      <span className="text-5xl">44.</span>
-      <span className="text-lg">44</span>
-    </div>
+    <>
+      <div className="flex justify-center items-center gap-4 bg-orange-300 p-2">
+        <Scramble solves={solves} />
+        <h1 className="bg-slate-300 p-3 rounded-md">
+          Solves: <strong>{solves}</strong>
+        </h1>
+      </div>
+      <div className="flex items-center justify-around flex-col">
+        <Timer onSolve={() => setSolves((solves) => solves + 1)} />
+        <span className="text-xl text-center">
+          Press <strong>Spacebar</strong> to start the timer and{" "}
+          <strong>Any key</strong> to stop it
+        </span>
+      </div>
+    </>
   );
 }
 
