@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "cubing": "^0.48.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-rubiks-cube-utils": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

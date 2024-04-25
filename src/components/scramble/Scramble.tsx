@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { randomScrambleForEvent } from "cubing/scramble";
+import { generateScramble } from "react-rubiks-cube-utils";
 import Spinner from "../spinner/Spinner";
 
 function Scramble({ solves }: { solves: number }) {
@@ -8,10 +8,10 @@ function Scramble({ solves }: { solves: number }) {
   const [scramble, setScramble] = useState<string>("");
 
   useEffect(() => {
-    async function fetchScramble() {
+    function fetchScramble() {
       try {
         setIsLoading(true);
-        const scramble = await randomScrambleForEvent("333");
+        const scramble = generateScramble({ type: "3x3" });
         console.log(scramble);
         setScramble(scramble.toString());
       } catch (err) {
