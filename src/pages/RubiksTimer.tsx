@@ -5,7 +5,7 @@ import Scramble from "../components/scramble/Scramble";
 function RubiksTimer() {
   const [solves, setSolves] = useState<number>(0);
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex select-none flex-col h-screen w-screen">
       <Scramble solves={solves} />
       <Timer
         solves={solves}

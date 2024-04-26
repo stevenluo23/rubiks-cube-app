@@ -13,7 +13,7 @@ function TimerDisplay({ solves, timeMs, isKeyDown, wasStopped }: DisplayProps) {
     // Figure out how to dynamically resize timer display as it grows to fit in container
     <div className="flex flex-col items-center text-center">
       <span
-        className={`font-lcd select-none
+        className={`font-lcd
         ${isKeyDown ? "text-green-400" : wasStopped ? "text-red-400" : ""}
         `}
       >
