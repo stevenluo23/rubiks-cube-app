@@ -12,7 +12,6 @@ function Scramble({ solves }: { solves: number }) {
       try {
         setIsLoading(true);
         const scramble = generateScramble({ type: "3x3" });
-        console.log(scramble);
         setScramble(scramble.toString());
       } catch (err) {
         if (err instanceof Error) {

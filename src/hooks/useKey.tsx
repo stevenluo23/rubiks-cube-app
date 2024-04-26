@@ -6,7 +6,7 @@ interface KeyActions {
   keyupAction: () => void;
 }
 
-export function useKey({ key, keydownAction, keyupAction }: KeyActions) {
+function useKey({ key, keydownAction, keyupAction }: KeyActions) {
   const keyHeldRef = useRef(false);
 
   useEffect(() => {
@@ -39,3 +39,5 @@ export function useKey({ key, keydownAction, keyupAction }: KeyActions) {
     };
   }, [key, keydownAction, keyupAction]);
 }
+
+export default useKey;
