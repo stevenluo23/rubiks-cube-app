@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply font-mono;
+  html,
+  body {
+    @apply font-mono m-0 w-full h-full;
   }
 
   @font-face {

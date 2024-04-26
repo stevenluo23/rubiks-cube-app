@@ -3,14 +3,16 @@ import useKey from "../../hooks/useKey";
 import useTimer from "../../hooks/useTimer";
 import TimerDisplay from "./TimerDisplay";
 
-function Timer({ onSolve }: { onSolve: () => void }) {
+interface TimerProps {
+  solves: number;
+  onSolve: () => void;
+}
+
+function Timer({ solves, onSolve }: TimerProps) {
   const { timeMs, setTimeMs, isRunning, setIsRunning } = useTimer();
   const [isKeyDown, setIsKeyDown] = useState<boolean>(false);
   const [wasStopped, setWasStopped] = useState<boolean>(false);
   const [canStart, setCanStart] = useState<boolean>(true);
-
-  const seconds = Math.floor(timeMs / 1000);
-  const hundredths = Math.floor((timeMs % 1000) / 10);
 
   const handleKeyDownAction = () => {
     if (isRunning) {
@@ -51,10 +53,14 @@ function Timer({ onSolve }: { onSolve: () => void }) {
   }, [wasStopped]);
 
   return (
-    <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction}>
+    <div
+      className="flex items-center justify-center w-screen h-full"
+      onTouchStart={handleKeyDownAction}
+      onTouchEnd={handleKeyUpaction}
+    >
       <TimerDisplay
-        seconds={seconds}
-        hundredths={hundredths}
+        solves={solves}
+        timeMs={timeMs}
         isKeyDown={isKeyDown}
         wasStopped={wasStopped}
       />

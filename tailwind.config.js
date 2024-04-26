@@ -6,6 +6,10 @@ export default {
       fontFamily: {
         lcd: ["LCD", "Consolas"],
       },
+      transitionProperty: {
+        opacity: "opacity",
+        visibility: "visibility",
+      },
     },
   },
   plugins: [],

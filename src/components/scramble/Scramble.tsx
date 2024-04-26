@@ -25,11 +25,14 @@ function Scramble({ solves }: { solves: number }) {
   }, [solves]);
 
   return (
-    <>
+    <header className="flex justify-center items-center gap-10 bg-orange-300 p-2">
       {isLoading && <Spinner />}
       {errorMsg && <div>Error: {errorMsg}</div>}
-      <span className="text-xl">{scramble}</span>
-    </>
+      {!isLoading && !errorMsg && <span className="text-xl">{scramble}</span>}
+      <h1 className="bg-slate-300 p-3 rounded-md">
+        Solves: <strong>{solves}</strong>
+      </h1>
+    </header>
   );
 }
 
