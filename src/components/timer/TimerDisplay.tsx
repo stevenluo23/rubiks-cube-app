@@ -22,7 +22,7 @@ const TimerDisplay: React.FC<DisplayProps> = ({
     // Figure out how to dynamically resize timer display as it grows to fit in container
     <div
       className={`flex flex-col justify-center items-center text-center ${
-        isRunning ? "h-[100svh]" : "h-[90svh]"
+        isRunning ? "h-[100svh]" : "h-[80svh]"
       }`}
     >
       {" "}
