@@ -43,7 +43,7 @@ const Scramble: React.FC<{ solves: number }> = ({ solves }) => {
           Solves: <strong>{solves}</strong>
         </h1>
       </header>
-      <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit absolute right-0 bottom-0">
+      <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit fixed right-0 bottom-0 md:block hidden">
         <DisplayCube cube={myCube} size={10} />
       </div>
     </>
