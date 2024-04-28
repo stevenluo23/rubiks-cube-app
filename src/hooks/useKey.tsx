@@ -11,20 +11,14 @@ function useKey({ key, keydownAction, keyupAction }: KeyActions) {
 
   useEffect(() => {
     const keydownCallback = (e: KeyboardEvent) => {
-      if (
-        key.toLowerCase() === "any" ||
-        (e.key.toLowerCase() === key.toLowerCase() && !keyHeldRef.current)
-      ) {
+      if (key.toLowerCase() === "any" || (e.key.toLowerCase() === key.toLowerCase() && !keyHeldRef.current)) {
         keyHeldRef.current = true;
         keydownAction();
       }
     };
 
     const keyupCallback = (e: KeyboardEvent) => {
-      if (
-        key.toLowerCase() === "any" ||
-        e.key.toLowerCase() === key.toLowerCase()
-      ) {
+      if (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase()) {
         keyHeldRef.current = false;
         keyupAction();
       }
