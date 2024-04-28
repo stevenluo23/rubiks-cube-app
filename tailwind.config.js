@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        lcd: ["LCD", "Consolas"],
+        lcd: ["LCD", "Consolas", "Menlo", "Courier", "monospace"],
       },
       transitionProperty: {
         opacity: "opacity",
