@@ -55,7 +55,7 @@ const RubiksTimer = () => {
   }, [wasStopped]);
 
   return (
-    <div className="flex select-none flex-col h-screen w-screen">
+    <div className="flex select-none flex-col h-svh w-svh">
       {!isRunning && <Scramble solves={solves} />}
       <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction}>
         <TimerDisplay
@@ -63,6 +63,7 @@ const RubiksTimer = () => {
           timeMs={timeMs}
           isKeyDown={isKeyDown}
           wasStopped={wasStopped}
+          isRunning={isRunning}
         />
       </div>
     </div>

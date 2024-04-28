@@ -25,7 +25,7 @@ const Scramble: React.FC<{ solves: number }> = ({ solves }) => {
   }, [solves]);
 
   return (
-    <header className="flex justify-center items-center gap-8 bg-orange-300 h-[20vh]]">
+    <header className="flex justify-center items-center gap-8 bg-orange-300 h-[10svh]">
       {isLoading && <Spinner />}
       {errorMsg && <div>Error: {errorMsg}</div>}
       {!isLoading && !errorMsg && (
