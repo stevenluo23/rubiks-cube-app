@@ -1,16 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-interface TimerState {
-  timeMs: number;
-  setTimeMs: React.Dispatch<React.SetStateAction<number>>;
-  isRunning: boolean;
-  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function useTimer(): TimerState {
-  const [timeMs, setTimeMs] = useState<number>(0);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const startTime = useRef<number>(0);
+function useTimer() {
+  const [timeMs, setTimeMs] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const startTime = useRef(0);
   const timeMsRef = useRef(timeMs);
 
   useEffect(() => {

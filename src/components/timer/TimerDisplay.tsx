@@ -1,3 +1,5 @@
+import React from "react";
+
 interface DisplayProps {
   solves: number;
   timeMs: number;
@@ -5,13 +7,18 @@ interface DisplayProps {
   wasStopped: boolean;
 }
 
-function TimerDisplay({ solves, timeMs, isKeyDown, wasStopped }: DisplayProps) {
+const TimerDisplay: React.FC<DisplayProps> = ({
+  solves,
+  timeMs,
+  isKeyDown,
+  wasStopped,
+}) => {
   const minutes = Math.floor(timeMs / 60000);
   const seconds = Math.floor((timeMs % 60000) / 1000);
   const hundredths = Math.floor((timeMs % 1000) / 10);
   return (
     // Figure out how to dynamically resize timer display as it grows to fit in container
-    <div className="flex flex-col items-center text-center">
+    <div className="flex flex-col justify-center items-center text-center h-[80vh]">
       <span
         className={`font-lcd
         ${isKeyDown ? "text-green-400" : wasStopped ? "text-red-400" : ""}
@@ -37,6 +44,6 @@ function TimerDisplay({ solves, timeMs, isKeyDown, wasStopped }: DisplayProps) {
       </span>
     </div>
   );
-}
+};
 
 export default TimerDisplay;
