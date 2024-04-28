@@ -29,7 +29,7 @@ const Scramble: React.FC<{ solves: number }> = ({ solves }) => {
       {isLoading && <Spinner />}
       {errorMsg && <div>Error: {errorMsg}</div>}
       {!isLoading && !errorMsg && (
-        <span className="text-xl content-center h-full w-fit pl-2 py-2">
+        <span className="text-xl sm:text-2xl content-center h-full w-fit pl-2 py-2">
           {scramble}
         </span>
       )}
