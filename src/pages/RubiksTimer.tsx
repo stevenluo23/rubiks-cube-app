@@ -6,9 +6,13 @@ import useTimer from "../hooks/useTimer";
 import TimerDisplay from "../components/timer/TimerDisplay";
 import Scramble from "../components/scramble/Scramble";
 
-const RubiksTimer = () => {
+interface RubiksTimerProps {
+  onSolve: React.Dispatch<React.SetStateAction<Solve[]>>;
+  solves: Solve[];
+}
+
+const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   const { timeMs, setTimeMs, isRunning, setIsRunning } = useTimer();
-  const [solves, setSolves] = useState<Solve[]>([]);
   const [isKeyDown, setIsKeyDown] = useState(false);
   const [wasStopped, setWasStopped] = useState(false);
   const [canStart, setCanStart] = useState(true);
@@ -24,7 +28,7 @@ const RubiksTimer = () => {
         setTimeout(() => {
           setWasStopped(false);
         }, 100);
-        setSolves((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, scramble: scramble, date: new Date() }]);
+        onSolve((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, scramble: scramble, date: new Date() }]);
         setScramble(generateScramble({ type: "3x3" }).toString());
       } else if (canStart) {
         setIsKeyDown(true);
@@ -67,7 +71,7 @@ const RubiksTimer = () => {
 
   return (
     <div className="select-none h-svh w-svw">
-      {!isRunning && <Scramble scramble={scramble} />}
+      {!isRunning && <Scramble scramble={scramble} onClear={() => onSolve([])} />}
       <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction}>
         <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
       </div>

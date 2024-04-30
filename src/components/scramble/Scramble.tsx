@@ -1,6 +1,12 @@
 import { applyScramble, Cube, DisplayCube } from "react-rubiks-cube-utils";
+import { Solve } from "../../lib";
 
-const Scramble: React.FC<{ scramble: string }> = ({ scramble }) => {
+interface ScrambleProps {
+  scramble: string;
+  onClear: React.Dispatch<React.SetStateAction<Solve[]>>;
+}
+
+const Scramble: React.FC<ScrambleProps> = ({ scramble, onClear }) => {
   const myCube: Cube = applyScramble({ type: "3x3", scramble: scramble });
 
   return (
@@ -10,6 +16,9 @@ const Scramble: React.FC<{ scramble: string }> = ({ scramble }) => {
         {/* <h1 className="bg-slate-300 p-3 m-2 rounded-md">
           Solves: <strong>{solves}</strong>
         </h1> */}
+        <button onClick={() => onClear([])} className="bg-slate-300 p-2 m-2 rounded-md">
+          Clear Solves
+        </button>
       </header>
       <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit fixed right-0 bottom-0 md:block hidden">
         <DisplayCube cube={myCube} size={10} />
