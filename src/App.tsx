@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="flex">
-      <div className="grid grid-rows-3 h-screen sm:w-1/4">
+      <div className="hidden sm:grid grid-rows-3 h-screen w-1/4">
         <div className="row-span-1">
           <Nav />
         </div>
