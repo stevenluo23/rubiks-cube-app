@@ -1,24 +1,15 @@
-import { useState, useEffect } from "react";
 import { Solve } from "./lib";
 import RubiksTimer from "./pages/RubiksTimer";
 import TimerTable from "./components/sidebar/TimerTable";
 import Nav from "./components/sidebar/Nav";
+import useLocalStorageState from "./hooks/useLocalStorageState";
 
 function App() {
-  const [solves, setSolves] = useState<Solve[]>(() => {
-    // Load the solves from local storage when initializing the state
-    const savedSolves = localStorage.getItem("solves");
-    return savedSolves ? JSON.parse(savedSolves) : [];
-  });
-
-  useEffect(() => {
-    // Save the solves to local storage whenever it changes
-    localStorage.setItem("solves", JSON.stringify(solves));
-  }, [solves]);
+  const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
 
   return (
     <div className="flex">
-      <div className="hidden sm:grid grid-rows-3 h-screen w-1/4">
+      <div className="hidden sm:grid grid-rows-3 h-screen w-1/6">
         <div className="row-span-1">
           <Nav />
         </div>

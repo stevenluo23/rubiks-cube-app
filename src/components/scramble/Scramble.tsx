@@ -16,7 +16,7 @@ const Scramble: React.FC<ScrambleProps> = ({ scramble, onClear }) => {
         {/* <h1 className="bg-slate-300 p-3 m-2 rounded-md">
           Solves: <strong>{solves}</strong>
         </h1> */}
-        <button onClick={() => onClear([])} className="bg-slate-300 p-2 m-2 rounded-md">
+        <button onClick={() => onClear([])} className="bg-slate-300 p-2 m-2 rounded-md select-none hover:bg-slate-200 transition-colors duration-200 focus:outline-none">
           Clear Solves
         </button>
       </header>

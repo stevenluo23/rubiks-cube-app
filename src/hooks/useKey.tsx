@@ -24,12 +24,19 @@ function useKey({ key, keydownAction, keyupAction }: KeyActions) {
       }
     };
 
+    // Key no longer held when window loses focus
+    const blurCallback = () => {
+      keyHeldRef.current = false;
+    };
+
     document.addEventListener("keydown", keydownCallback);
     document.addEventListener("keyup", keyupCallback);
+    window.addEventListener("blur", blurCallback);
 
     return () => {
       document.removeEventListener("keydown", keydownCallback);
       document.removeEventListener("keyup", keyupCallback);
+      window.removeEventListener("blur", blurCallback);
     };
   }, [key, keydownAction, keyupAction]);
 }

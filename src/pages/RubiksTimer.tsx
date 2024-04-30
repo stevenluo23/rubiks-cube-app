@@ -17,27 +17,22 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   const [wasStopped, setWasStopped] = useState(false);
   const [canStart, setCanStart] = useState(true);
   const [scramble, setScramble] = useState<string>("");
-  const keyHeldRef = useRef(false);
 
   const handleKeyDownAction = () => {
-    if (!keyHeldRef.current) {
-      keyHeldRef.current = true;
-      if (isRunning) {
-        setIsRunning(false);
-        setWasStopped(true);
-        setTimeout(() => {
-          setWasStopped(false);
-        }, 100);
-        onSolve((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, scramble: scramble, date: new Date() }]);
-        setScramble(generateScramble({ type: "3x3" }).toString());
-      } else if (canStart) {
-        setIsKeyDown(true);
-      }
+    if (isRunning) {
+      setIsRunning(false);
+      setWasStopped(true);
+      setTimeout(() => {
+        setWasStopped(false);
+      }, 100);
+      onSolve((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, scramble: scramble, date: new Date() }]);
+      setScramble(generateScramble({ type: "3x3" }).toString());
+    } else if (canStart) {
+      setIsKeyDown(true);
     }
   };
 
   const handleKeyUpaction = () => {
-    keyHeldRef.current = false;
     if (isKeyDown && canStart) {
       setTimeMs(0);
       setIsKeyDown(false);
@@ -66,8 +61,6 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   useEffect(() => {
     setScramble(generateScramble({ type: "3x3" }).toString());
   }, []);
-
-  // Handling the updating of scramble in a Solve object
 
   return (
     <div className="select-none h-svh w-svw">
