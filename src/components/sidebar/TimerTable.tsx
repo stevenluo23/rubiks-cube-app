@@ -18,7 +18,7 @@ const TimerTable: React.FC<{ solves: Solve[] }> = ({ solves }) => {
                 <div className="h-10">{solve.count}</div>
               </td>
               <td className="border-solid border-2 text-center leading-10">
-                <div className="h-10">{(solve.time / 1000).toFixed(2)}</div>
+                <div className="h-10">{Math.floor(solve.time / 10) / 100}</div>
               </td>
             </tr>
           ))}
