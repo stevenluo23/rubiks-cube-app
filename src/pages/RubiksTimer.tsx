@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Solve } from "../lib";
-import { generateScramble } from "react-rubiks-cube-utils";
+import { generateScramble, applyScramble, Cube, DisplayCube } from "react-rubiks-cube-utils";
 import useKey from "../hooks/useKey";
 import useTimer from "../hooks/useTimer";
 import TimerDisplay from "../components/timer/TimerDisplay";
@@ -16,9 +16,12 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   const [isKeyDown, setIsKeyDown] = useState(false);
   const [wasStopped, setWasStopped] = useState(false);
   const [canStart, setCanStart] = useState(true);
-  const [scramble, setScramble] = useState<string>("");
+  const [scramble, setScramble] = useState("");
+  const myCube: Cube = applyScramble({ type: "3x3", scramble: scramble });
+  const keyHeldRef = useRef(false);
 
   const handleKeyDownAction = () => {
+    keyHeldRef.current = true;
     if (isRunning) {
       setIsRunning(false);
       setWasStopped(true);
@@ -33,6 +36,7 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   };
 
   const handleKeyUpaction = () => {
+    keyHeldRef.current = false;
     if (isKeyDown && canStart) {
       setTimeMs(0);
       setIsKeyDown(false);
@@ -64,7 +68,19 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
 
   return (
     <div className="select-none h-svh w-svw">
-      {!isRunning && <Scramble scramble={scramble} onClear={() => onSolve([])} />}
+      {!isRunning && (
+        <>
+          <header className="flex justify-center items-center gap-8 bg-orange-300 h-fit sm:h-[12svh]">
+            <Scramble scramble={scramble} />
+            <button onClick={() => onSolve([])} className="bg-slate-300 p-2 m-2 rounded-md select-none hover:bg-slate-200 transition-colors duration-200 focus:outline-none">
+              Clear Solves
+            </button>
+          </header>
+          <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit fixed right-0 bottom-0 md:block hidden">
+            <DisplayCube cube={myCube} size={10} />
+          </div>
+        </>
+      )}
       <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction}>
         <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
       </div>
