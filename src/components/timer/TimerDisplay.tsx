@@ -25,7 +25,7 @@ const TimerDisplay: React.FC<DisplayProps> = ({ solves, timeMs, isKeyDown, wasSt
         <span className="text-8xl sm:text-[12rem]">{minutes > 0 ? seconds.toString().padStart(2, "0") : seconds}.</span>
         <span className="text-[2rem] sm:text-[8rem]">{hundredths.toString().padStart(2, "0")}</span>
       </span>
-      <span className={`text-xl transition-opacity duration-1000 md:block hidden ${solves.length !== 0 ? "opacity-0" : "opacity-100"}`}>
+      <span className={`text-xl transition-opacity duration-1000 sm:block hidden ${solves.length !== 0 ? "opacity-0" : "opacity-100"}`}>
         Press <strong>Spacebar</strong> to start the timer and <strong>Any key</strong> to stop it
       </span>
     </div>

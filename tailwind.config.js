@@ -10,6 +10,9 @@ export default {
         opacity: "opacity",
         visibility: "visibility",
       },
+      width: {
+        inherit: "inherit",
+      },
     },
   },
   plugins: [],

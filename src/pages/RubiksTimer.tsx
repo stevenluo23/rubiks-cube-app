@@ -6,6 +6,16 @@ import useTimer from "../hooks/useTimer";
 import TimerDisplay from "../components/timer/TimerDisplay";
 import Scramble from "../components/scramble/Scramble";
 
+function calculateAo5(solves: Solve[], timeMs: number): number | null {
+  if (solves.length >= 4) {
+    const lastFiveSolves = [...solves.slice(-4).map((solve) => solve.time), timeMs];
+    const sortedSolves = lastFiveSolves.sort((a, b) => a - b);
+    const ao5Solves = sortedSolves.slice(1, -1); // Remove fastest and slowest solve
+    return ao5Solves.reduce((a, b) => a + b, 0) / ao5Solves.length; // Calculate average
+  }
+  return null;
+}
+
 interface RubiksTimerProps {
   onSolve: React.Dispatch<React.SetStateAction<Solve[]>>;
   solves: Solve[];
@@ -23,12 +33,18 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   const handleKeyDownAction = () => {
     keyHeldRef.current = true;
     if (isRunning) {
+      // Stop timer
       setIsRunning(false);
       setWasStopped(true);
       setTimeout(() => {
         setWasStopped(false);
       }, 100);
-      onSolve((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, scramble: scramble, date: new Date() }]);
+
+      // Add solve
+      const ao5 = calculateAo5(solves, timeMs);
+      onSolve((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, ao5: ao5, scramble: scramble, date: new Date() }]);
+
+      // Generate new scramble for next solve
       setScramble(generateScramble({ type: "3x3" }).toString());
     } else if (canStart) {
       setIsKeyDown(true);
@@ -76,7 +92,7 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
               Clear Solves
             </button>
           </header>
-          <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit fixed right-0 bottom-0 md:block hidden">
+          <div className="p-2 rounded-lg bg-slate-300 w-fit h-fit fixed right-0 bottom-0 sm:block hidden">
             <DisplayCube cube={myCube} size={10} />
           </div>
         </>
