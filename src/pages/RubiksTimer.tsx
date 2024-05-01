@@ -29,6 +29,7 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
   const [scramble, setScramble] = useState("");
   const myCube: Cube = applyScramble({ type: "3x3", scramble: scramble });
   const keyHeldRef = useRef(false);
+  const escapeKeyRef = useRef(false);
 
   const handleKeyDownAction = () => {
     keyHeldRef.current = true;
@@ -53,7 +54,7 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
 
   const handleKeyUpaction = () => {
     keyHeldRef.current = false;
-    if (isKeyDown && canStart) {
+    if (isKeyDown && canStart && !escapeKeyRef.current) {
       setTimeMs(0);
       setIsKeyDown(false);
       setIsRunning(true);
@@ -65,6 +66,17 @@ const RubiksTimer: React.FC<RubiksTimerProps> = ({ onSolve, solves }) => {
     key: isRunning ? "any" : " ",
     keydownAction: handleKeyDownAction,
     keyupAction: handleKeyUpaction,
+  });
+
+  // Prevent timer from starting when the user presses escape
+  useKey({
+    key: "Escape",
+    keydownAction: () => {
+      setIsKeyDown(false);
+      keyHeldRef.current = false;
+      escapeKeyRef.current = true;
+    },
+    keyupAction: () => (escapeKeyRef.current = false),
   });
 
   // Prevents user from restarting immediately after stopping (safeguard)
