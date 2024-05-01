@@ -9,7 +9,7 @@ interface KeyActions {
 function useKey({ key, keydownAction, keyupAction }: KeyActions) {
   useEffect(() => {
     const keydownCallback = (e: KeyboardEvent) => {
-      if (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase()) {
+      if (!e.repeat && (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase())) {
         keydownAction();
       }
     };
