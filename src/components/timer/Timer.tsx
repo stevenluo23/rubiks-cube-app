@@ -77,7 +77,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
       setCanStart(false);
       setTimeout(() => {
         setCanStart(true);
-      }, 250);
+      }, 500);
     }
   }, [wasStopped]);
 
