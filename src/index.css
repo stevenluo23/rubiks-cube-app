@@ -5,7 +5,7 @@
 @layer base {
   html,
   body {
-    @apply font-mono m-0 w-full h-full text-[2vh] bg-green-100;
+    @apply m-0 h-full w-full bg-green-100 font-mono text-[2vh];
   }
 
   @font-face {
@@ -20,11 +20,11 @@
   table,
   table td,
   table th {
-    @apply border-solid border-[0.1rem] border-gray-500 p-[0.3rem];
+    @apply border-[0.1rem] border-solid border-gray-500 p-[0.3rem];
   }
 
   .custom-border {
-    @apply border-solid border-[0.15rem] rounded-[0.35rem] p-[0.3rem];
+    @apply rounded-[0.35rem] border-[0.15rem] border-solid p-[0.3rem];
   }
 }
 

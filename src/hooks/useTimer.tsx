@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import useLocalStorageState from "./useLocalStorageState";
 
 function useTimer() {
-  const [timeMs, setTimeMs] = useState(0);
+  const [timeMs, setTimeMs] = useLocalStorageState(0, "timerTimeMs");
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ function useTimer() {
     }
 
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [isRunning, setTimeMs]);
 
   return { timeMs, setTimeMs, isRunning, setIsRunning };
 }

@@ -33,13 +33,31 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
         setWasStopped(false);
       }, 100);
 
-      // Add solve
-      const ao5 = calculateAo5(solves, timeMs);
-      setSolves((prevSolves) => [...prevSolves, { count: prevSolves.length + 1, time: timeMs, ao5: ao5, scramble: scramble, date: new Date() }]);
+      setSolves((prevSolves) => {
+        // Add the new solve
+        const newSolves = [
+          ...prevSolves,
+          {
+            count: prevSolves.length + 1,
+            time: timeMs,
+            ao5: null, // Temporarily set Ao5 to null
+            scramble: scramble,
+            date: new Date(),
+          },
+        ];
+
+        // Calculate the Ao5
+        const ao5 = calculateAo5(newSolves);
+
+        // Update the new solve with the calculated Ao5
+        newSolves[newSolves.length - 1].ao5 = ao5;
+
+        return newSolves;
+      });
 
       // Generate new scramble for next solve
       setScramble(generateScramble({ type: "3x3" }).toString());
-    } else if (canStart) {
+    } else if (!isKeyDown && canStart) {
       setIsKeyDown(true);
     }
   };
@@ -64,6 +82,9 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
   useKey({
     key: "Escape",
     keydownAction: () => {
+      if (!keyHeldRef.current) {
+        setTimeMs(0);
+      }
       setIsKeyDown(false);
       keyHeldRef.current = false;
       escapeKeyRef.current = true;
@@ -82,7 +103,11 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
   }, [wasStopped]);
 
   return (
-    <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction} className={`flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}>
+    <div
+      onTouchStart={handleKeyDownAction}
+      onTouchEnd={handleKeyUpaction}
+      className={`flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}
+    >
       <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
     </div>
   );

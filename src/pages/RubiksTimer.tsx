@@ -21,17 +21,26 @@ function RubiksTimer() {
 
   return (
     <>
-      <div style={{ height: "calc(100svh - env(safe-area-inset-bottom))" }} className="absolute w-full z-0 select-none touch-none">
+      <div style={{ height: "calc(100svh - env(safe-area-inset-bottom))" }} className="absolute z-0 w-full touch-none select-none">
         <div className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
           <Nav setSolves={setSolves} />
           <Scramble scramble={scramble} />
           <TimerTable solves={solves} />
-          <div className="absolute max-[768px]:bottom-[11.8vw] right-0 bottom-0 bg-slate-300 border-slate-200 border-solid border-[0.15rem] rounded-[0.35rem] p-[0.3rem] z-20">
+          <div className="absolute bottom-0 right-0 z-20 rounded-[0.35rem] border-[0.15rem] border-solid border-slate-200 bg-slate-300 p-[0.3rem] max-[768px]:bottom-[11.8vw]">
             <DisplayCube cube={myCube} size={6} />
           </div>
         </div>
         <div className="relative z-10">
-          <Timer setSolves={setSolves} solves={solves} setScramble={setScramble} scramble={scramble} timeMs={timeMs} setTimeMs={setTimeMs} isRunning={isRunning} setIsRunning={setIsRunning} />
+          <Timer
+            setSolves={setSolves}
+            solves={solves}
+            setScramble={setScramble}
+            scramble={scramble}
+            timeMs={timeMs}
+            setTimeMs={setTimeMs}
+            isRunning={isRunning}
+            setIsRunning={setIsRunning}
+          />
         </div>
       </div>
     </>
