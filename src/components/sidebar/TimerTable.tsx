@@ -5,7 +5,7 @@ import { calculateAo5, calculateTimes } from "../../utils";
 const TimerTable: React.FC<{ solves: Solve[] }> = ({ solves }) => {
   return (
     <div className="absolute max-[768px]:top-auto max-[768px]:bottom-[11.8vw] top-[13.5rem] left-0 bottom-0 border-orange-200 custom-border bg-orange-300 z-20">
-      <div className="max-[768px]:max-h-[13.5rem] overflow-y-auto h-full w-full no-scrollbar">
+      <div className="max-[768px]:max-h-[13.5rem] overflow-y-auto overflow-x-hidden h-full w-full no-scrollbar touch-pan-y">
         <table className="table-fixed min-w-[13.5rem]">
           <thead>
             <tr>
