@@ -9,6 +9,8 @@
 - [X] Finish basic styling for navbar and timer table
 - [ ] Add extra scramble features & back/next buttons for scrambles
 - [ ] Add individual solve deletion
+- [ ] Create a reusable modal window for clear all button confirmation
+- [ ] Optimize Tailwind CSS styling and refactor component reusability
 - [ ] Convert to using cubing.js
 - [ ] Create a feature/page twister-player
 - [ ] Create a learning page with resources to learn how to solve a rubiks cube.
