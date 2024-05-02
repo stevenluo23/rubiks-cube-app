@@ -21,7 +21,7 @@ function RubiksTimer() {
 
   return (
     <>
-      <div style={{ height: "calc(100% - env(safe-area-inset-bottom))" }} className="absolute w-full z-0">
+      <div style={{ height: "calc(100svh - env(safe-area-inset-bottom))" }} className="absolute w-full z-0">
         {!isRunning && (
           <>
             <Nav setSolves={setSolves} />

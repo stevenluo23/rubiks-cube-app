@@ -91,7 +91,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
   }, [wasStopped]);
 
   return (
-    <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction} className={`flex h-screen items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}>
+    <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction} className={`flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}>
       <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} />
     </div>
   );
