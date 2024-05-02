@@ -42,7 +42,10 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({ solves, timeMs, isKeyDown, 
               {formattedTimeChange.seconds}.{formattedTimeChange.hundredths.toString().padStart(2, "0")})
             </p>
           ) : (
-            !!timeMs && <p className={`pb-4 md:pb-8 md:text-[2em] ${timeChange && timeChange > 0 ? "text-red-400" : "text-green-400"}`}>(0.00)</p>
+            !!timeMs &&
+            solves.length > 1 && (
+              <p className={`pb-4 md:pb-8 md:text-[2em] ${timeChange && timeChange > 0 ? "text-red-400" : "text-green-400"}`}>(0.00)</p>
+            )
           ))}
       </div>
       {!isRunning && (
