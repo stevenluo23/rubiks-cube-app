@@ -3,16 +3,7 @@ import { Solve } from "../../lib";
 import { generateScramble } from "react-rubiks-cube-utils";
 import useKey from "../../hooks/useKey";
 import TimerDisplay from "./TimerDisplay";
-
-function calculateAo5(solves: Solve[], timeMs: number): number | null {
-  if (solves.length >= 4) {
-    const lastFiveSolves = [...solves.slice(-4).map((solve) => solve.time), timeMs];
-    const sortedSolves = lastFiveSolves.sort((a, b) => a - b);
-    const ao5Solves = sortedSolves.slice(1, -1); // Remove fastest and slowest solve
-    return ao5Solves.reduce((a, b) => a + b, 0) / ao5Solves.length; // Calculate average
-  }
-  return null;
-}
+import { calculateAo5 } from "../../utils";
 
 interface TimerProps {
   setSolves: React.Dispatch<React.SetStateAction<Solve[]>>;
@@ -92,7 +83,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
 
   return (
     <div onTouchStart={handleKeyDownAction} onTouchEnd={handleKeyUpaction} className={`flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}>
-      <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} />
+      <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
     </div>
   );
 };
