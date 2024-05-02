@@ -5,7 +5,7 @@
 @layer base {
   html,
   body {
-    @apply font-mono m-0 w-full h-full;
+    @apply font-mono m-0 w-full h-full text-[2vh] bg-green-100;
   }
 
   @font-face {
@@ -17,27 +17,26 @@
 }
 
 @layer components {
-  table {
-    @apply border-solid border-2;
-  }
-  table tr,
+  table,
   table td,
   table th {
-    @apply border-solid border-2;
+    @apply border-solid border-[0.1rem] border-gray-500 p-[0.3rem];
+  }
+
+  .custom-border {
+    @apply border-solid border-[0.15rem] rounded-[0.35rem] p-[0.3rem];
   }
 }
 
 @layer utilities {
-  @variants responsive {
-    /* Hide scrollbar for Chrome, Safari, and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  /* Hide scrollbar for Chrome, Safari, and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Hide scrollbar for IE, Edge, and Firefox */
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

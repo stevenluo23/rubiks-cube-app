@@ -1,5 +1,7 @@
+import React from "react";
+
 const Scramble = ({ scramble }: { scramble: string }) => {
-  return <span className="flex text-xl sm:text-2xl items-center justify-center h-full w-fit pl-2 py-2">{scramble}</span>;
+  return <span className="absolute max-[768px]:left-0 left-[14.3rem] top-0 right-0 bg-orange-300 text-xl md:text-4xl text-center border-orange-200 custom-border z-20">{scramble}</span>;
 };
 
 export default Scramble;

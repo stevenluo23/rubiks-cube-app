@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function useTimer() {
   const [timeMs, setTimeMs] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const startTime = useRef(0);
 
   useEffect(() => {
-    let intervalId: number;
+    let interval: number | undefined = undefined;
     if (isRunning) {
-      startTime.current = Date.now() - timeMs;
-      intervalId = setInterval(() => {
-        setTimeMs(Date.now() - startTime.current);
-      }, 1);
+      interval = setInterval(() => {
+        setTimeMs((prevTime) => prevTime + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
     }
-    return () => clearInterval(intervalId);
-  }, [isRunning, timeMs]);
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
 
   return { timeMs, setTimeMs, isRunning, setIsRunning };
 }
