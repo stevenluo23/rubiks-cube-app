@@ -11,6 +11,11 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
   const [canStart, setCanStart] = useState(true);
   const keyHeldRef = useRef(false);
   const escapeKeyRef = useRef(false);
+  const lastRecordedTime = useRef(timeMs);
+
+  useEffect(() => {
+    lastRecordedTime.current = timeMs;
+  }, [timeMs]);
 
   const handleKeyDownAction = () => {
     keyHeldRef.current = true;
@@ -28,7 +33,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
           ...prevSolves,
           {
             count: prevSolves.length + 1,
-            time: timeMs,
+            time: lastRecordedTime.current,
             ao5: null, // Temporarily set Ao5 to null
             scramble: scramble,
             date: new Date(),

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useTimer from "../hooks/useTimer";
 import { Solve, TimerProps } from "../lib";
 import { Cube, DisplayCube, applyScramble, generateScramble } from "react-rubiks-cube-utils";

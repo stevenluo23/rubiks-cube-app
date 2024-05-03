@@ -20,7 +20,7 @@
   table,
   table td,
   table th {
-    @apply border-[0.1rem] border-solid border-gray-500 p-[0.3rem];
+    @apply border-[0.1rem] border-solid border-gray-500;
   }
 
   .custom-border {

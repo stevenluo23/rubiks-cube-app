@@ -33,8 +33,8 @@ export function calculateTimeChange(solves: Solve[]): number | null {
     return null;
   }
 
-  const lastSolve = solves[solves.length - 1];
-  const secondToLastSolve = solves[solves.length - 2];
-  const timeChange = lastSolve.time - secondToLastSolve.time;
+  const lastSolve = Math.floor(solves[solves.length - 1].time / 10) * 10;
+  const secondToLastSolve = Math.floor(solves[solves.length - 2].time / 10) * 10;
+  const timeChange = lastSolve - secondToLastSolve;
   return timeChange;
 }
