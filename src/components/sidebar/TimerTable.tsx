@@ -5,16 +5,16 @@ import { calculateTimes } from "../../utils";
 const TimerTable: React.FC<{ solves: Solve[] }> = ({ solves }) => {
   return (
     <div className="custom-border absolute bottom-0 left-0 top-[13.5rem] z-20 border-orange-200 bg-orange-300 max-[768px]:bottom-[11.8vw] max-[768px]:top-auto">
-      <div className="no-scrollbar h-full w-full touch-pan-y overflow-y-auto overflow-x-hidden max-[768px]:max-h-[13.5rem]">
-        <table className="min-w-[13.5rem] table-fixed">
+      <div className="no-scrollbar h-full touch-pan-y overflow-y-auto overflow-x-hidden max-[768px]:max-h-[10.7rem]">
+        <table className="w-full max-w-[13.5rem] table-fixed">
           <thead>
             <tr>
               <th colSpan={3}>Solves: {solves.length}</th>
             </tr>
             <tr>
-              <th>#</th>
-              <th>time</th>
-              <th>ao5</th>
+              <th className="text-blue-600">#</th>
+              <th className="text-blue-600">time</th>
+              <th className="text-blue-600">ao5</th>
             </tr>
           </thead>
           <tbody>
@@ -34,7 +34,7 @@ const TimerTable: React.FC<{ solves: Solve[] }> = ({ solves }) => {
                       {seconds.toString().padStart(1, "0")}.{hundredths.toString().padStart(2, "0")}
                     </div>
                   </td>
-                  <td className="text-center leading-10">
+                  <td className="text-center leading-10 ">
                     <div>
                       {solve.ao5
                         ? `${ao5Minutes > 0 ? `${ao5Minutes}:` : ""}${ao5Seconds.toString().padStart(1, "0")}.${ao5Hundredths.toString().padStart(2, "0")}`
