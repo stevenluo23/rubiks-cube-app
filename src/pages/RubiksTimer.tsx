@@ -11,13 +11,8 @@ import Scramble from "../components/scramble/Scramble";
 const RubiksTimer = () => {
   const { timeMs, setTimeMs, isRunning, setIsRunning } = useTimer();
   const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
-  const [scramble, setScramble] = useState("");
+  const [scramble, setScramble] = useState(generateScramble({ type: "3x3" }).toString());
   const myCube: Cube = applyScramble({ type: "3x3", scramble: scramble });
-
-  // On initialization, set the scramble
-  useEffect(() => {
-    setScramble(generateScramble({ type: "3x3" }).toString());
-  }, []);
 
   const timerProps: TimerProps = {
     setSolves,
