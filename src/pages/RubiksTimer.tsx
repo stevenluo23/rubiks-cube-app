@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import useTimer from "../hooks/useTimer";
-import { Solve } from "../lib";
+import { Solve, TimerProps } from "../lib";
 import { Cube, DisplayCube, applyScramble, generateScramble } from "react-rubiks-cube-utils";
 import Nav from "../components/sidebar/Nav";
-import TimerTable from "../components/sidebar/TimerTable";
+import TimerTable from "../components/sidebar/table/TimerTable";
 import Timer from "../components/timer/Timer";
 import useLocalStorageState from "../hooks/useLocalStorageState";
 import Scramble from "../components/scramble/Scramble";
 
-function RubiksTimer() {
+const RubiksTimer = () => {
   const { timeMs, setTimeMs, isRunning, setIsRunning } = useTimer();
   const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
   const [scramble, setScramble] = useState("");
@@ -18,6 +18,17 @@ function RubiksTimer() {
   useEffect(() => {
     setScramble(generateScramble({ type: "3x3" }).toString());
   }, []);
+
+  const timerProps: TimerProps = {
+    setSolves,
+    solves,
+    setScramble,
+    scramble,
+    timeMs,
+    setTimeMs,
+    isRunning,
+    setIsRunning,
+  };
 
   return (
     <>
@@ -31,20 +42,11 @@ function RubiksTimer() {
           </div>
         </div>
         <div className="relative z-10">
-          <Timer
-            setSolves={setSolves}
-            solves={solves}
-            setScramble={setScramble}
-            scramble={scramble}
-            timeMs={timeMs}
-            setTimeMs={setTimeMs}
-            isRunning={isRunning}
-            setIsRunning={setIsRunning}
-          />
+          <Timer {...timerProps} />
         </div>
       </div>
     </>
   );
-}
+};
 
 export default RubiksTimer;

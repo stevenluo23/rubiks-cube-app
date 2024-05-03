@@ -1,4 +1,6 @@
 import React from "react";
+import TimeChangeIndicator from "./indicator/TimeChangeIndicator";
+import ZeroTimeIndicator from "./indicator/ZeroTimeIndicator";
 import { Solve } from "../../lib";
 import { calculateTimes, calculateAo5, calculateTimeChange } from "../../utils";
 
@@ -16,48 +18,54 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({ solves, timeMs, isKeyDown, 
   const timeChange = calculateTimeChange(solves);
 
   const formattedAo5 = ao5 && calculateTimes(ao5);
-  const formattedTimeChange = timeChange && calculateTimes(Math.abs(timeChange));
+  const formattedTimes = timeChange && calculateTimes(Math.abs(timeChange));
+
+  const renderTimerDisplay = () => {
+    return (
+      <div className={`font-lcd ${isKeyDown ? "text-green-400" : wasStopped ? "text-red-400" : ""}`}>
+        {minutes > 0 && <span className="text-8xl md:text-[12rem]">{minutes}:</span>}
+        <span className="text-[6em] md:text-[12em]">{minutes > 0 ? seconds.toString().padStart(2, "0") : seconds}.</span>
+        {/* Display only tenths place when timer is running for quicker timer calculations */}
+        {isRunning ? (
+          <span className="text-[3em] md:text-[8em]">{tenths.toString()}</span>
+        ) : (
+          <span className="text-[3em] md:text-[8em]">{hundredths.toString().padStart(2, "0")}</span>
+        )}
+      </div>
+    );
+  };
+
+  const renderIndicator = () => {
+    if (formattedTimes) {
+      return <TimeChangeIndicator timeChange={timeChange} formattedTimes={formattedTimes} />;
+    } else if (timeMs && solves.length > 1) {
+      return <ZeroTimeIndicator solves={solves} timeChange={timeChange || 0} />;
+    }
+    return null;
+  };
+
+  const renderAo5 = () => {
+    if (!formattedAo5) {
+      return null;
+    }
+
+    return (
+      <div className="text-center text-xl text-blue-600 md:text-2xl">
+        <p>
+          ao5: {formattedAo5.minutes > 0 ? `${formattedAo5.minutes}:` : ""}
+          {formattedAo5.seconds}.{formattedAo5.hundredths.toString().padStart(2, "0")}
+        </p>
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex items-end gap-4 leading-none">
-        <div
-          className={`font-lcd
-    ${isKeyDown ? "text-green-400" : wasStopped ? "text-red-400" : ""}
-    `}
-        >
-          {minutes > 0 && <span className="text-8xl md:text-[12rem]">{minutes}:</span>}
-          <span className="text-[6em] md:text-[12em]">{minutes > 0 ? seconds.toString().padStart(2, "0") : seconds}.</span>
-          {isRunning ? (
-            <span className="text-[2em] md:text-[8em]">{tenths.toString()}</span>
-          ) : (
-            <span className="text-[3em] md:text-[8em]">{hundredths.toString().padStart(2, "0")}</span>
-          )}
-        </div>
-        {!isRunning &&
-          (formattedTimeChange ? (
-            <p className={`pb-4 md:pb-8 md:text-[2em] ${timeChange && timeChange > 0 ? "text-red-400" : "text-green-400"}`}>
-              ({timeChange && timeChange > 0 ? "+" : "-"}
-              {formattedTimeChange.minutes > 0 ? `${formattedTimeChange.minutes}:` : ""}
-              {formattedTimeChange.seconds}.{formattedTimeChange.hundredths.toString().padStart(2, "0")})
-            </p>
-          ) : (
-            !!timeMs &&
-            solves.length > 1 && (
-              <p className={`pb-4 md:pb-8 md:text-[2em] ${timeChange && timeChange > 0 ? "text-red-400" : "text-green-400"}`}>(0.00)</p>
-            )
-          ))}
+        {renderTimerDisplay()}
+        {!isRunning && renderIndicator()}
       </div>
-      {!isRunning && (
-        <div className="text-center text-xl text-blue-600 md:text-2xl">
-          {formattedAo5 && (
-            <p>
-              ao5: {formattedAo5.minutes > 0 ? `${formattedAo5.minutes}:` : ""}
-              {formattedAo5.seconds}.{formattedAo5.hundredths.toString().padStart(2, "0")}
-            </p>
-          )}
-        </div>
-      )}
+      {!isRunning && renderAo5()}
       <div
         className={`hidden w-1/2 text-center text-xl transition-opacity duration-1000 md:block ${solves.length !== 0 ? "opacity-0" : "opacity-100"}`}
       >

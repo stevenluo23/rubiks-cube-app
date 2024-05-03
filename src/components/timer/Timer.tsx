@@ -1,20 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { Solve } from "../../lib";
 import { generateScramble } from "react-rubiks-cube-utils";
 import useKey from "../../hooks/useKey";
 import TimerDisplay from "./TimerDisplay";
 import { calculateAo5 } from "../../utils";
-
-interface TimerProps {
-  setSolves: React.Dispatch<React.SetStateAction<Solve[]>>;
-  solves: Solve[];
-  setScramble: React.Dispatch<React.SetStateAction<string>>;
-  scramble: string;
-  timeMs: number;
-  setTimeMs: React.Dispatch<React.SetStateAction<number>>;
-  isRunning: boolean;
-  setIsRunning: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { TimerProps } from "../../lib";
 
 const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble, timeMs, setTimeMs, isRunning, setIsRunning }) => {
   const [isKeyDown, setIsKeyDown] = useState(false);
@@ -46,10 +35,10 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
           },
         ];
 
-        // Calculate the Ao5
+        // Calculate the Ao5 when we have >= 5 solves
         const ao5 = calculateAo5(newSolves);
 
-        // Update the new solve with the calculated Ao5
+        // Update the new solve with the calculated Ao5 if it exists, updates to null otherwise
         newSolves[newSolves.length - 1].ao5 = ao5;
 
         return newSolves;
@@ -64,6 +53,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
 
   const handleKeyUpaction = () => {
     keyHeldRef.current = false;
+    // Avoids starting the timer on release if the ESC key was hit
     if (isKeyDown && canStart && !escapeKeyRef.current) {
       setTimeMs(0);
       setIsKeyDown(false);
