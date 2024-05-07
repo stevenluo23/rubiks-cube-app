@@ -3,7 +3,7 @@ import { Solve } from "../lib";
 import { Cube, DisplayCube, applyScramble, generateScramble } from "react-rubiks-cube-utils";
 import { calculateAo5 } from "../utils";
 import Nav from "../components/navigation/Nav";
-import TimerTable from "../table/TimerTable";
+import TimerTable from "../components/table/TimerTable";
 import Timer from "../components/timer/Timer";
 import useLocalStorageState from "../hooks/useLocalStorageState";
 import Scramble from "../components/scramble/Scramble";
