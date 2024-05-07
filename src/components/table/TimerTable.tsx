@@ -1,7 +1,7 @@
 import React from "react";
+import { Solve } from "../../lib";
 import SolveRow from "./SolveRow";
-import Button from "../components/button/Button";
-import { Solve } from "../lib";
+import Button from "../button/Button";
 
 const TimerTable: React.FC<{ solves: Solve[]; clearSolves: () => void }> = ({ solves, clearSolves }) => {
   return (
