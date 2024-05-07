@@ -1,11 +1,4 @@
-import { Solve } from "../lib";
-
-interface Times {
-  seconds: number;
-  minutes: number;
-  hundredths: number;
-  tenths: number;
-}
+import { Solve, Times } from "../lib";
 
 export function calculateAo5(solves: Solve[]): number | null {
   if (solves.length < 5) {

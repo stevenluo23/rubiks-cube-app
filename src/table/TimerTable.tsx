@@ -1,11 +1,13 @@
 import React from "react";
 import SolveRow from "./SolveRow";
-import { Solve } from "../../../lib";
+import Button from "../components/button/Button";
+import { Solve } from "../lib";
 
-const TimerTable: React.FC<{ solves: Solve[] }> = ({ solves }) => {
+const TimerTable: React.FC<{ solves: Solve[]; clearSolves: () => void }> = ({ solves, clearSolves }) => {
   return (
-    <div className="custom-border absolute bottom-0 left-0 top-[13.5rem] z-20 border-orange-200 bg-orange-300 max-[768px]:bottom-[11.8vw] max-[768px]:top-auto">
-      <div className="no-scrollbar h-full touch-pan-y overflow-y-auto overflow-x-hidden max-[768px]:max-h-[10.7rem]">
+    <div className="custom-border absolute bottom-0 left-0 top-[13.5rem] z-20 space-y-3 border-orange-200 bg-orange-300 max-[768px]:bottom-[11.8vw] max-[768px]:top-auto">
+      <Button onClick={clearSolves}>Clear Solves</Button>
+      <div className="no-scrollbar h-[90%] touch-pan-y overflow-y-auto overflow-x-hidden max-[768px]:max-h-[10.7rem]">
         <table className="w-full max-w-[13.5rem] table-fixed">
           <thead>
             <tr>

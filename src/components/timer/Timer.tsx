@@ -1,56 +1,45 @@
-import { useEffect, useState, useRef } from "react";
-import { generateScramble } from "react-rubiks-cube-utils";
+import { useState, useRef } from "react";
+import { Solve } from "../../lib";
 import useKey from "../../hooks/useKey";
+import useTimer from "../../hooks/useStopwatch";
 import TimerDisplay from "./TimerDisplay";
-import { calculateAo5 } from "../../utils";
-import { TimerProps } from "../../lib";
+import TimeChange from "./TimeChange";
+import Ao5 from "./Ao5";
 
-const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble, timeMs, setTimeMs, isRunning, setIsRunning }) => {
+interface TimerProps {
+  solves: Solve[];
+  addSolve: (timeMs: number) => void;
+  toggleDashboard: () => void;
+}
+
+const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
+  const { timeMs, isRunning, reset, start, stop } = useTimer();
+
   const [isKeyDown, setIsKeyDown] = useState(false);
   const [wasStopped, setWasStopped] = useState(false);
   const [canStart, setCanStart] = useState(true);
   const keyHeldRef = useRef(false);
   const escapeKeyRef = useRef(false);
-  const lastRecordedTime = useRef(timeMs);
-
-  useEffect(() => {
-    lastRecordedTime.current = timeMs;
-  }, [timeMs]);
 
   const handleKeyDownAction = () => {
     keyHeldRef.current = true;
     if (isRunning) {
-      // Stop timer
-      setIsRunning(false);
+      stop();
+      toggleDashboard();
+
+      // Styling for TimerDisplay
       setWasStopped(true);
       setTimeout(() => {
         setWasStopped(false);
       }, 100);
 
-      setSolves((prevSolves) => {
-        // Add the new solve
-        const newSolves = [
-          ...prevSolves,
-          {
-            count: prevSolves.length + 1,
-            time: lastRecordedTime.current,
-            ao5: null, // Temporarily set Ao5 to null
-            scramble: scramble,
-            date: new Date(),
-          },
-        ];
+      // Prevent user from restarting immediately after stopping
+      setCanStart(false);
+      setTimeout(() => {
+        setCanStart(true);
+      }, 500);
 
-        // Calculate the Ao5 when we have >= 5 solves
-        const ao5 = calculateAo5(newSolves);
-
-        // Update the new solve with the calculated Ao5 if it exists, updates to null otherwise
-        newSolves[newSolves.length - 1].ao5 = ao5;
-
-        return newSolves;
-      });
-
-      // Generate new scramble for next solve
-      setScramble(generateScramble({ type: "3x3" }).toString());
+      addSolve(timeMs);
     } else if (!isKeyDown && canStart) {
       setIsKeyDown(true);
     }
@@ -60,9 +49,11 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
     keyHeldRef.current = false;
     // Avoids starting the timer on release if the ESC key was hit
     if (isKeyDown && canStart && !escapeKeyRef.current) {
-      setTimeMs(0);
-      setIsKeyDown(false);
-      setIsRunning(true);
+      reset();
+      setIsKeyDown(false); // Changes styling for TimerDisplay
+      start();
+
+      toggleDashboard();
     }
   };
 
@@ -78,7 +69,7 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
     key: "Escape",
     keydownAction: () => {
       if (!keyHeldRef.current) {
-        setTimeMs(0);
+        reset();
       }
       setIsKeyDown(false);
       keyHeldRef.current = false;
@@ -87,23 +78,20 @@ const Timer: React.FC<TimerProps> = ({ setSolves, solves, setScramble, scramble,
     keyupAction: () => (escapeKeyRef.current = false),
   });
 
-  // Prevents user from restarting immediately after stopping (safeguard)
-  useEffect(() => {
-    if (wasStopped) {
-      setCanStart(false);
-      setTimeout(() => {
-        setCanStart(true);
-      }, 500);
-    }
-  }, [wasStopped]);
-
   return (
     <div
       onTouchStart={handleKeyDownAction}
       onTouchEnd={handleKeyUpaction}
-      className={`flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}
+      className={`relative z-10 flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}
     >
-      <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
+      <TimerDisplay
+        timeMs={timeMs}
+        isKeyDown={isKeyDown}
+        wasStopped={wasStopped}
+        isRunning={isRunning}
+        timeChangeComponent={<TimeChange solves={solves} />}
+        ao5Component={<Ao5 solves={solves} />}
+      />
     </div>
   );
 };

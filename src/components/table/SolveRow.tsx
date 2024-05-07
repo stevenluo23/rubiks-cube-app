@@ -1,6 +1,6 @@
 import React from "react";
-import { Solve } from "../../../lib";
-import { calculateTimes } from "../../../utils";
+import { Solve } from "../../lib";
+import { calculateTimes } from "../../utils";
 
 const SolveRow: React.FC<{ solve: Solve }> = ({ solve }) => {
   const { seconds, minutes, hundredths } = calculateTimes(solve.time);

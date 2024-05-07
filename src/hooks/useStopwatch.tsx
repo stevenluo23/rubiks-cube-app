@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import useLocalStorageState from "./useLocalStorageState";
 
-function useTimer() {
+function useStopwatch() {
   const [timeMs, setTimeMs] = useLocalStorageState(0, "timerTimeMs");
-  const timeMsRef = useRef(timeMs);
   const [isRunning, setIsRunning] = useState(false);
+  const timeMsRef = useRef(timeMs);
   const startTime = useRef(0);
 
   // Keep timeMsRef current
@@ -26,7 +26,19 @@ function useTimer() {
     return () => clearInterval(interval);
   }, [isRunning, setTimeMs]);
 
-  return { timeMs, setTimeMs, isRunning, setIsRunning };
+  const reset = () => {
+    setTimeMs(0);
+  };
+
+  const start = () => {
+    setIsRunning(true);
+  };
+
+  const stop = () => {
+    setIsRunning(false);
+  };
+
+  return { timeMs, isRunning, reset, start, stop };
 }
 
-export default useTimer;
+export default useStopwatch;
