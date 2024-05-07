@@ -3,8 +3,6 @@ import { Solve } from "../../lib";
 import useKey from "../../hooks/useKey";
 import useTimer from "../../hooks/useStopwatch";
 import TimerDisplay from "./TimerDisplay";
-import TimeChange from "./TimeChange";
-import Ao5 from "./Ao5";
 
 interface TimerProps {
   solves: Solve[];
@@ -84,14 +82,7 @@ const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
       onTouchEnd={handleKeyUpaction}
       className={`relative z-10 flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}
     >
-      <TimerDisplay
-        timeMs={timeMs}
-        isKeyDown={isKeyDown}
-        wasStopped={wasStopped}
-        isRunning={isRunning}
-        timeChangeComponent={<TimeChange solves={solves} />}
-        ao5Component={<Ao5 solves={solves} />}
-      />
+      <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
     </div>
   );
 };
