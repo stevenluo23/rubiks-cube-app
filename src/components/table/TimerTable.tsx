@@ -7,7 +7,9 @@ const TimerTable: React.FC<{ solves: Solve[]; clearSolves: () => void }> = ({ so
   return (
     <div className="custom-border absolute bottom-0 left-0 top-[13.5rem] z-20 space-y-3 border-orange-200 bg-orange-300 max-[768px]:bottom-[11.8vw] max-[768px]:top-auto">
       <Button onClick={clearSolves}>Clear Solves</Button>
-      <div className="no-scrollbar h-[90%] touch-pan-y overflow-y-auto overflow-x-hidden max-[768px]:max-h-[9.5rem]">
+      <div
+        className={`no-scrollbar ${solves.length === 0 ? "h-auto" : "h-[90%] touch-pan-y overflow-x-hidden overflow-y-scroll overscroll-contain max-[768px]:max-h-[9.5rem]"}`}
+      >
         <table className="w-full max-w-[13.5rem] table-fixed">
           <thead>
             <tr>

@@ -5,7 +5,7 @@
 @layer base {
   html,
   body {
-    @apply m-0 h-full w-full bg-green-100 font-mono text-[2vh];
+    @apply m-0 h-full w-full overscroll-none bg-green-100 font-mono text-[2vh];
   }
 
   @font-face {
