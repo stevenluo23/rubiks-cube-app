@@ -35,7 +35,7 @@ const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
       setCanStart(false);
       setTimeout(() => {
         setCanStart(true);
-      }, 500);
+      }, 700);
 
       addSolve(timeMs);
     } else if (!isKeyDown && canStart) {
@@ -80,7 +80,7 @@ const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
     <div
       onTouchStart={handleKeyDownAction}
       onTouchEnd={handleKeyUpaction}
-      className={`relative z-10 flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[5%]"}`}
+      className={`relative z-10 flex h-svh items-center justify-center ${isRunning ? "" : "md:ml-[10%]"}`}
     >
       <TimerDisplay solves={solves} timeMs={timeMs} isKeyDown={isKeyDown} wasStopped={wasStopped} isRunning={isRunning} />
     </div>
