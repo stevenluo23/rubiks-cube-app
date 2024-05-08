@@ -13,7 +13,7 @@ interface TimerDisplayProps {
 }
 
 const TimerDisplay: React.FC<TimerDisplayProps> = ({ solves, timeMs, isKeyDown, wasStopped, isRunning }) => {
-  const timeToCalculate = isRunning ? timeMs : solves.length > 0 ? solves[solves.length - 1].time : 0;
+  const timeToCalculate = isRunning ? timeMs : timeMs === 0 || solves.length === 0 ? 0 : solves[solves.length - 1].time;
   const { seconds, minutes, hundredths, tenths } = calculateTimes(timeToCalculate);
 
   const renderTimerDisplay = () => {

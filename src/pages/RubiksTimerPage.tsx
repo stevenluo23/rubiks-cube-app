@@ -9,7 +9,7 @@ import useLocalStorageState from "../hooks/useLocalStorageState";
 import Scramble from "../components/scramble/Scramble";
 import TimerDashboard from "../components/dashboard/TimerDashboard";
 
-const RubiksTimer = () => {
+const RubiksTimerPage = () => {
   const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
   const [scramble, setScramble] = useState(generateScramble({ type: "3x3" }).toString());
   const [isRunning, setIsRunning] = useState(false);
@@ -65,4 +65,4 @@ const RubiksTimer = () => {
   );
 };
 
-export default RubiksTimer;
+export default RubiksTimerPage;
