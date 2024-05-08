@@ -1,5 +1,7 @@
 # WIP Rubiks Cube App
 
+![webpage screenshot](https://github.com/stevenluo23/movie-watchlist/blob/main/screenshots/app.png?raw=true)
+
 ## Current Features
 
 - Stopwatch timer up to hundredth second accuracy with the start on release
