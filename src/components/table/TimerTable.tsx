@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Solve } from "../../lib";
-import SolveRow from "./SolveRow";
 import Button from "../button/Button";
 import ModalWindow from "../modal/ModalWindow";
 import { calculateAo5 } from "../../utils";
+import useDisableKeys from "../../hooks/useDisableKeys";
+import useModal from "../../hooks/useModal";
+import ConfirmModalContent from "../modal/ConfirmModalContent";
+import SolvesTable from "./SolvesTable";
 
 interface TimerTableProps {
   solves: Solve[];
@@ -12,54 +15,20 @@ interface TimerTableProps {
 }
 
 const TimerTable: React.FC<TimerTableProps> = ({ solves, clearSolves, setSolves }) => {
-  const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const { modalRef, modalContent, setModalContent, toggleModal } = useModal();
+  // Disable spacebar starting timer when modal is open and escape key to close modal
+  useDisableKeys((modalRef.current && modalRef.current.open) || false, [" ", "Escape"]);
 
   // Open dialog to confirm clearing all solves
   const handleOpenClearModal = () => {
-    setDialogContent(
-      <>
-        <span>Clear all solves?</span>
-        <div className="mt-4 flex justify-evenly">
-          <Button onClick={() => toggleDialog()}>No</Button>
-          <Button backgroundColor="bg-blue-300" onClick={confirmClear}>
-            Yes
-          </Button>
-        </div>
-      </>,
-    );
-    toggleDialog();
+    setModalContent(<ConfirmModalContent message="Clear all solves?" onConfirm={confirmClear} onCancel={toggleModal} />);
+    toggleModal();
   };
 
-  // Open dialog to confirm deletion of solve
+  // Open modal to confirm deletion of solve
   const handleOpenDeleteModal = (solve: Solve) => {
-    setDialogContent(
-      <>
-        <span>Delete this solve?</span>
-        <div className="mt-4 flex justify-evenly">
-          <Button onClick={() => toggleDialog()}>No</Button>
-          <Button backgroundColor="bg-blue-300" onClick={() => confirmRemove(solve)}>
-            Yes
-          </Button>
-        </div>
-      </>,
-    );
-    toggleDialog();
-  };
-
-  const toggleDialog = () => {
-    if (!dialogRef.current) {
-      return;
-    }
-    if (dialogRef.current.hasAttribute("open")) {
-      dialogRef.current.close();
-      // Remove focus from the button that opened the dialog
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-      }
-    } else {
-      dialogRef.current.showModal();
-    }
+    setModalContent(<ConfirmModalContent message="Delete this solve?" onConfirm={() => confirmRemove(solve)} onCancel={toggleModal} />);
+    toggleModal();
   };
 
   // Remove solve from solves array and recalculate ao5 for the last five solves
@@ -78,31 +47,13 @@ const TimerTable: React.FC<TimerTableProps> = ({ solves, clearSolves, setSolves 
       });
 
     setSolves(newSolves);
-    toggleDialog();
+    toggleModal();
   };
 
   const confirmClear = () => {
     clearSolves();
-    toggleDialog();
+    toggleModal();
   };
-
-  // Disable spacebar starting timer when dialog is open
-  useEffect(() => {
-    const disableKeyboardInput = (event: KeyboardEvent) => {
-      if (dialogRef.current && dialogRef.current.open) {
-        const keysToDisable = [" "];
-        if (keysToDisable.includes(event.key)) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      }
-    };
-
-    window.addEventListener("keydown", disableKeyboardInput, true);
-    return () => {
-      window.removeEventListener("keydown", disableKeyboardInput, true);
-    };
-  }, [dialogRef]);
 
   return (
     <>
@@ -112,27 +63,11 @@ const TimerTable: React.FC<TimerTableProps> = ({ solves, clearSolves, setSolves 
         <div
           className={`no-scrollbar ${solves.length === 0 ? "h-auto" : "h-[90%] touch-pan-y overflow-x-hidden overflow-y-scroll overscroll-contain max-[768px]:max-h-[9.5rem]"}`}
         >
-          <table className="w-full max-w-[13.5rem] table-fixed">
-            <thead>
-              <tr>
-                <th colSpan={3}>Solves: {solves.length}</th>
-              </tr>
-              <tr>
-                <th className="text-blue-600">#</th>
-                <th className="text-blue-600">time</th>
-                <th className="text-blue-600">ao5</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...solves].reverse().map((solve, idx, self) => (
-                <SolveRow key={idx} index={self.length - idx} solve={solve} onModalOpen={() => handleOpenDeleteModal(solve)} />
-              ))}
-            </tbody>
-          </table>
+          <SolvesTable solves={solves} onModalOpen={handleOpenDeleteModal} />
         </div>
       </div>
-      <ModalWindow ref={dialogRef} toggleDialog={toggleDialog}>
-        {dialogContent}
+      <ModalWindow ref={modalRef} toggleModal={toggleModal}>
+        {modalContent}
       </ModalWindow>
     </>
   );

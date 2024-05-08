@@ -1,8 +1,7 @@
-import { useState, useRef } from "react";
 import { Solve } from "../../lib";
-import useKey from "../../hooks/useKey";
 import useTimer from "../../hooks/useStopwatch";
 import TimerDisplay from "./TimerDisplay";
+import useTimerKeyEvents from "../../hooks/useTimerKeyEvents";
 
 interface TimerProps {
   solves: Solve[];
@@ -13,68 +12,15 @@ interface TimerProps {
 const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
   const { timeMs, isRunning, reset, start, stop } = useTimer();
 
-  const [isKeyDown, setIsKeyDown] = useState(false);
-  const [wasStopped, setWasStopped] = useState(false);
-  const [canStart, setCanStart] = useState(true);
-  const keyHeldRef = useRef(false);
-  const escapeKeyRef = useRef(false);
-
-  const handleKeyDownAction = () => {
-    keyHeldRef.current = true;
-    if (isRunning) {
-      stop();
-      toggleDashboard();
-
-      // Styling for TimerDisplay
-      setWasStopped(true);
-      setTimeout(() => {
-        setWasStopped(false);
-      }, 100);
-
-      // Prevent user from restarting immediately after stopping
-      setCanStart(false);
-      setTimeout(() => {
-        setCanStart(true);
-      }, 700);
-
-      addSolve(timeMs);
-    } else if (!isKeyDown && canStart) {
-      setIsKeyDown(true);
-    }
-  };
-
-  const handleKeyUpaction = () => {
-    keyHeldRef.current = false;
-    // Avoids starting the timer on release if the ESC key was hit
-    if (isKeyDown && canStart && !escapeKeyRef.current) {
-      reset();
-      setIsKeyDown(false); // Changes styling for TimerDisplay
-      start();
-
-      toggleDashboard();
-    }
-  };
-
-  // Start timer on spacebar, stop on any key
-  useKey({
-    key: isRunning ? "any" : " ",
-    keydownAction: handleKeyDownAction,
-    keyupAction: handleKeyUpaction,
-  });
-
-  // Prevent timer from starting when the user presses escape
-  useKey({
-    key: "Escape",
-    keydownAction: () => {
-      if (!keyHeldRef.current) {
-        reset();
-      }
-      setIsKeyDown(false);
-      keyHeldRef.current = false;
-      escapeKeyRef.current = true;
-    },
-    keyupAction: () => (escapeKeyRef.current = false),
-  });
+  const { isKeyDown, wasStopped, handleKeyDownAction, handleKeyUpaction } = useTimerKeyEvents(
+    isRunning,
+    timeMs,
+    start,
+    stop,
+    reset,
+    addSolve,
+    toggleDashboard,
+  );
 
   return (
     <div
