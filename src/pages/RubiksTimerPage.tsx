@@ -56,7 +56,7 @@ const RubiksTimerPage = () => {
         <TimerDashboard
           navComponent={<Nav />}
           scrambleComponent={<Scramble scramble={scramble} />}
-          timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} />}
+          timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} setSolves={setSolves} />}
           cubeDisplayComponent={<DisplayCube cube={myCube} size={6} />}
         />
       </div>
