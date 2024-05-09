@@ -20,8 +20,9 @@
 - [x] Finish basic styling for navbar and timer table
 - [x] Add individual solve deletion
 - [x] Create a reusable modal window for clear all button confirmation
-- [ ] Add extra scramble features & back/next buttons for scrambles
-- [ ] Refactor all components to be more readable using best practices
-- [ ] Refactor Tailwind CSS styling
+- [x] Add back/next buttons for scrambles
+- [ ] Add extra scramble modes
+- [ ] Brainstorm nav bar
 - [ ] Create a learning page with resources to learn how to solve a rubiks cube.
 - [ ] Create a "cheatsheet" the user can enable that displays common algorithms in a quick and easy way while they are solving (kind of like a sticky note)
+- [ ] Refactor Tailwind CSS styling and all components

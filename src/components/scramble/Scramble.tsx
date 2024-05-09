@@ -12,7 +12,7 @@ const Scramble: React.FC<ScrambleProps> = ({ scramble, prevScramble, handleNewSc
   return (
     <>
       <ScrambleOptions scramble={scramble} prevScramble={prevScramble} onNewScramble={handleNewScramble} onPrevScramble={handlePrevScramble} />
-      <span className="text-xl md:text-4xl">{scramble}</span>
+      <span className="text-xl sm:text-4xl">{scramble}</span>
     </>
   );
 };
