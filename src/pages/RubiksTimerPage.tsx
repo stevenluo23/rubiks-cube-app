@@ -10,7 +10,7 @@ import useScramble from "../hooks/useScramble";
 
 const RubiksTimerPage = () => {
   const { solves, setSolves, handleAddSolve, handleClearSolves } = useSolves();
-  const { scramble, myCube, handleNewScramble } = useScramble();
+  const { scramble, prevScramble, myCube, handleNewScramble, handlePrevScramble } = useScramble();
   const [isRunning, setIsRunning] = useState(false);
 
   const handleAddSolveAndGenerateNewScramble = (timeMs: number) => {
@@ -27,7 +27,9 @@ const RubiksTimerPage = () => {
       <div className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
         <TimerDashboard
           navComponent={<Nav />}
-          scrambleComponent={<Scramble scramble={scramble} />}
+          scrambleComponent={
+            <Scramble scramble={scramble} prevScramble={prevScramble} handleNewScramble={handleNewScramble} handlePrevScramble={handlePrevScramble} />
+          }
           timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} setSolves={setSolves} />}
           cubeDisplayComponent={<DisplayCube cube={myCube} size={6} />}
         />

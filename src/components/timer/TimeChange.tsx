@@ -8,7 +8,7 @@ const TimeChange: React.FC<{ solves: Solve[] }> = ({ solves }) => {
   const formattedTimes: Times = timeChange !== 0 ? calculateTimes(Math.abs(timeChange)) : { minutes: 0, seconds: 0, hundredths: 0, tenths: 0 };
 
   return (
-    <p className={`pb-4 md:pb-8 md:text-[2em] ${timeChange <= 0 ? "text-green-400" : "text-red-400"}`}>
+    <p className={`pb-4 lg:pb-8 lg:text-[2em] ${timeChange <= 0 ? "text-green-400" : "text-red-400"}`}>
       ({timeChange > 0 ? "+" : timeChange < 0 ? "-" : ""}
       {formattedTimes.minutes > 0 ? `${formattedTimes.minutes}:` : ""}
       {formattedTimes.seconds}.{formattedTimes.hundredths.toString().padStart(2, "0")})

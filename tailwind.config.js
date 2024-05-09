@@ -13,6 +13,10 @@ export default {
       width: {
         inherit: "inherit",
       },
+      screens: {
+        "max-md": { max: "768px" },
+        "max-lg": { max: "1024px" },
+      },
     },
   },
   plugins: [],

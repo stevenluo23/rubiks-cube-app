@@ -19,9 +19,9 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({ solves, timeMs, isKeyDown, 
   const renderTimerDisplay = () => {
     return (
       <div className={`font-lcd ${isKeyDown ? "text-green-400" : wasStopped ? "text-red-400" : ""}`}>
-        {minutes > 0 && <span className="text-8xl md:text-[12rem]">{minutes}:</span>}
-        <span className="text-[6em] md:text-[12em]">{minutes > 0 ? seconds.toString().padStart(2, "0") : seconds}.</span>
-        <span className="text-[3em] md:text-[8em]">{isRunning ? tenths.toString() : hundredths.toString().padStart(2, "0")}</span>
+        {minutes > 0 && <span className="text-8xl lg:text-[12rem]">{minutes}:</span>}
+        <span className="text-[6em] lg:text-[12em]">{minutes > 0 ? seconds.toString().padStart(2, "0") : seconds}.</span>
+        <span className="text-[3em] lg:text-[8em]">{isRunning ? tenths.toString() : hundredths.toString().padStart(2, "0")}</span>
       </div>
     );
   };

@@ -4,9 +4,11 @@ interface ButtonProps {
   onClick?: () => void;
   children: React.ReactNode;
   backgroundColor?: string;
+  size?: "small" | "medium" | "large";
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, children, backgroundColor = "bg-slate-300" }) => {
+const Button: React.FC<ButtonProps> = ({ onClick, children, backgroundColor = "bg-slate-300", size = "medium", disabled = false }) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (onClick) {
       onClick();
@@ -22,10 +24,18 @@ const Button: React.FC<ButtonProps> = ({ onClick, children, backgroundColor = "b
     }
   };
 
-  const buttonClass = `${backgroundColor} select-none rounded-md p-2 transition-colors duration-200 hover:brightness-110 focus:ring-2 focus:ring-slate-400 active:bg-slate-400`;
+  const fontSize = size === "small" ? "text-sm" : size === "large" ? "text-lg" : "text-base";
+  const baseButtonClass = `${backgroundColor} ${fontSize} select-none rounded-md p-2 transition-colors duration-200 focus:ring-2 focus:ring-slate-400`;
+  const hoverActiveClass = "hover:brightness-110 active:bg-slate-400";
+  const disabledClass = "opacity-50";
 
   return (
-    <button className={buttonClass} onClick={handleClick} onKeyDown={handleKeyDown}>
+    <button
+      className={`${baseButtonClass} ${disabled ? disabledClass : hoverActiveClass}`}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      disabled={disabled}
+    >
       {children}
     </button>
   );
