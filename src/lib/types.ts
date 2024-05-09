@@ -1,4 +1,5 @@
 export interface Solve {
+  id: string;
   count: number;
   time: number;
   ao5: number | null;

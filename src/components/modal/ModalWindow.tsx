@@ -6,7 +6,6 @@ type ModalWindowProps = {
 };
 
 const ModalWindow = forwardRef<HTMLDialogElement, ModalWindowProps>(({ children, toggleModal }, ref) => {
-  console.log("modal window");
   return (
     <dialog
       className="rounded-xl bg-white p-0 shadow"

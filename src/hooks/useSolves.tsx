@@ -1,6 +1,7 @@
 import { Solve } from "../lib";
 import useLocalStorageState from "./useLocalStorageState";
 import { calculateAo5 } from "../utils";
+import { v4 as uuid } from "uuid";
 
 const useSolves = () => {
   const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
@@ -10,6 +11,7 @@ const useSolves = () => {
       const newSolves = [
         ...prevSolves,
         {
+          id: uuid(),
           count: prevSolves.length + 1,
           time: timeMs,
           ao5: null,

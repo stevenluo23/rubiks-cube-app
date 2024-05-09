@@ -13,7 +13,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "react-rubiks-cube-utils": "^1.1.2"
+    "react-rubiks-cube-utils": "^1.1.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

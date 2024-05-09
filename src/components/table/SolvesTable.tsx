@@ -21,7 +21,7 @@ const SolvesTable: React.FC<SolvesTableProps> = ({ solves, onModalOpen }) => (
     </thead>
     <tbody>
       {[...solves].reverse().map((solve, idx, self) => (
-        <SolveRow key={idx} index={self.length - idx} solve={solve} onModalOpen={() => onModalOpen(solve)} />
+        <SolveRow key={solve.id} index={self.length - idx} solve={solve} onModalOpen={() => onModalOpen(solve)} />
       ))}
     </tbody>
   </table>
