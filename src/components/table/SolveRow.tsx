@@ -20,15 +20,17 @@ const SolveRow: React.FC<SolveRowProps> = ({ solve, onModalOpen, index }) => {
       </td>
       <td className="text-center leading-10">
         <div>
-          {minutes > 0 ? `${minutes}:` : ""}
-          {seconds.toString().padStart(1, "0")}.{hundredths.toString().padStart(2, "0")}
+          {minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, "0")}.` : `${seconds.toString().padStart(1, "0")}.`}
+          {hundredths.toString().padStart(2, "0")}
         </div>
       </td>
       <td className="text-center leading-10 ">
         <div>
-          {solve.ao5
-            ? `${ao5Minutes > 0 ? `${ao5Minutes}:` : ""}${ao5Seconds.toString().padStart(1, "0")}.${ao5Hundredths.toString().padStart(2, "0")}`
-            : "-"}
+          <div>
+            {solve.ao5
+              ? `${ao5Minutes > 0 ? `${ao5Minutes}:${ao5Seconds.toString().padStart(2, "0")}.` : `${ao5Seconds.toString().padStart(1, "0")}.`}${ao5Hundredths.toString().padStart(2, "0")}`
+              : "-"}
+          </div>
         </div>
       </td>
     </tr>
