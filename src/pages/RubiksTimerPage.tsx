@@ -10,17 +10,21 @@ import useScramble from "../hooks/useScramble";
 
 const RubiksTimerPage = () => {
   const { solves, setSolves, handleAddSolve, handleClearSolves } = useSolves();
-  const { scramble, prevScramble, myCube, handleNewScramble, handlePrevScramble } = useScramble();
+  const [scrambleType, setScrambleType] = useState("3x3");
+  const { scramble, prevScramble, myCube, handleNewScramble, handlePrevScramble } = useScramble(scrambleType);
   const [isRunning, setIsRunning] = useState(false);
 
   const handleAddSolveAndGenerateNewScramble = (timeMs: number) => {
     handleAddSolve(timeMs, scramble);
-    handleNewScramble();
+    handleNewScramble(scrambleType);
   };
 
   const handleToggleDashboard = () => {
     setIsRunning(!isRunning);
   };
+
+  // Determine if the DisplayCube component should be rendered
+  const shouldRenderCube = scrambleType === "2x2" || scrambleType === "3x3";
 
   return (
     <div style={{ height: "calc(100svh - env(safe-area-inset-bottom))" }} className="absolute z-0 w-full touch-none select-none">
@@ -28,10 +32,20 @@ const RubiksTimerPage = () => {
         <TimerDashboard
           navComponent={<Nav />}
           scrambleComponent={
-            <Scramble scramble={scramble} prevScramble={prevScramble} handleNewScramble={handleNewScramble} handlePrevScramble={handlePrevScramble} />
+            <Scramble
+              scramble={scramble}
+              scrambleType={scrambleType}
+              handleScrambleChange={(newScramble: string) => {
+                setScrambleType(newScramble);
+                handleNewScramble(newScramble);
+              }}
+              prevScramble={prevScramble}
+              handleNewScramble={(newScramble: string) => handleNewScramble(newScramble)}
+              handlePrevScramble={handlePrevScramble}
+            />
           }
           timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} setSolves={setSolves} />}
-          cubeDisplayComponent={<DisplayCube cube={myCube} size={6} />}
+          cubeDisplayComponent={shouldRenderCube ? <DisplayCube cube={myCube} size={6} /> : null}
         />
       </div>
       <Timer solves={solves} addSolve={handleAddSolveAndGenerateNewScramble} toggleDashboard={handleToggleDashboard} />

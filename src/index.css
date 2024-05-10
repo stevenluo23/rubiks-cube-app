@@ -39,4 +39,12 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .max-md {
+    @apply max-w-[768px];
+  }
+
+  .max-lg {
+    @apply max-w-[1024px];
+  }
 }

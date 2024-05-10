@@ -59,7 +59,7 @@ const TimerTable: React.FC<TimerTableProps> = ({ solves, clearSolves, setSolves 
     <>
       <Button onClick={handleOpenClearModal}>Clear Solves</Button>
       <div
-        className={`no-scrollbar mt-2 ${solves.length === 0 ? "h-auto" : "h-[90%] touch-pan-y overflow-x-hidden overflow-y-scroll overscroll-contain max-[768px]:max-h-[9.5rem]"}`}
+        className={`no-scrollbar mt-2 ${solves.length === 0 ? "h-auto" : "h-[90%] touch-pan-y overflow-x-hidden overflow-y-scroll overscroll-contain max-lg:max-h-[9.5rem]"}`}
       >
         <SolvesTable solves={solves} onModalOpen={handleOpenDeleteModal} />
       </div>

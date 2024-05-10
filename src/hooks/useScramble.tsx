@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import { generateScramble, Cube, applyScramble } from "react-rubiks-cube-utils";
 
-const useScramble = () => {
-  const prevScramble = useRef(generateScramble({ type: "3x3" }).toString());
+// possible/usable scrambles: "2x2", "3x3", "4x4", "5x5", "6x6"
+const useScramble = (scrambleType: string) => {
+  const prevScramble = useRef(generateScramble({ type: scrambleType }).toString());
   const [scramble, setScramble] = useState(prevScramble.current);
 
-  const handleNewScramble = () => {
-    const newScramble = generateScramble({ type: "3x3" }).toString();
+  const handleNewScramble = (newScrambleType?: string) => {
+    const newScramble = generateScramble({ type: newScrambleType || scrambleType }).toString();
     prevScramble.current = scramble;
     setScramble(newScramble);
   };
@@ -15,7 +16,7 @@ const useScramble = () => {
     setScramble(prevScramble.current);
   };
 
-  const myCube: Cube = applyScramble({ type: "3x3", scramble: scramble });
+  const myCube: Cube = applyScramble({ type: scrambleType, scramble: scramble });
 
   return { scramble, prevScramble, myCube, handleNewScramble, handlePrevScramble };
 };

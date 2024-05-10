@@ -3,15 +3,24 @@ import ScrambleOptions from "./ScrambleOptions";
 
 interface ScrambleProps {
   scramble: string;
+  scrambleType: string;
   prevScramble: React.MutableRefObject<string>;
-  handleNewScramble: () => void;
+  handleScrambleChange: (newScrambleType: string) => void;
+  handleNewScramble: (newScramble: string) => void;
   handlePrevScramble: () => void;
 }
 
-const Scramble: React.FC<ScrambleProps> = ({ scramble, prevScramble, handleNewScramble, handlePrevScramble }) => {
+const Scramble: React.FC<ScrambleProps> = ({ scramble, scrambleType, prevScramble, handleScrambleChange, handleNewScramble, handlePrevScramble }) => {
   return (
     <>
-      <ScrambleOptions scramble={scramble} prevScramble={prevScramble} onNewScramble={handleNewScramble} onPrevScramble={handlePrevScramble} />
+      <ScrambleOptions
+        scramble={scramble}
+        scrambleType={scrambleType}
+        prevScramble={prevScramble}
+        onNewScrambleType={handleScrambleChange}
+        onNewScramble={(newScramble: string) => handleNewScramble(newScramble)}
+        onPrevScramble={handlePrevScramble}
+      />
       <span className="text-xl sm:text-4xl">{scramble}</span>
     </>
   );
