@@ -1,6 +1,6 @@
 # WIP Rubiks Cube App
 
-![webpage screenshot](https://github.com/stevenluo23/rubiks-cube-app/blob/main/screenshots/appv2.png?raw=true)
+![webpage screenshot](https://github.com/stevenluo23/rubiks-cube-app/blob/main/screenshots/appv3.png?raw=true)
 
 ## Current Features
 
