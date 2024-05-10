@@ -7,10 +7,11 @@ import Scramble from "../components/scramble/Scramble";
 import TimerDashboard from "../components/dashboard/TimerDashboard";
 import useSolves from "../hooks/useSolves";
 import useScramble from "../hooks/useScramble";
+import useLocalStorageState from "../hooks/useLocalStorageState";
 
 const RubiksTimerPage = () => {
   const { solves, setSolves, handleAddSolve, handleClearSolves } = useSolves();
-  const [scrambleType, setScrambleType] = useState("3x3");
+  const [scrambleType, setScrambleType] = useLocalStorageState<string>("3x3", "scrambleType");
   const { scramble, prevScramble, myCube, handleNewScramble, handlePrevScramble } = useScramble(scrambleType);
   const [isRunning, setIsRunning] = useState(false);
 

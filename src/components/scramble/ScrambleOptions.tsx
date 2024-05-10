@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Button from "../button/Button";
 
 interface ScrambleOptionsProps {
@@ -19,12 +19,20 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
   onPrevScramble,
 }) => {
   const selectRef = useRef<HTMLSelectElement>(null);
+  const prevScrambleTypeRef = useRef(scrambleType);
+
+  useEffect(() => {
+    prevScrambleTypeRef.current = scrambleType;
+  }, [scrambleType]);
+
   const handleNewScrambleType = (value: string) => {
     onNewScrambleType(value);
     if (selectRef.current) {
       selectRef.current.blur();
     }
   };
+
+  const isLastButtonDisabled = prevScramble.current.toString() === scramble || scrambleType !== prevScrambleTypeRef.current;
 
   return (
     <div className="flex items-center justify-center gap-4">
@@ -35,7 +43,7 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
           </option>
         ))}
       </select>
-      <Button onClick={onPrevScramble} disabled={prevScramble.current.toString() === scramble}>
+      <Button onClick={onPrevScramble} disabled={isLastButtonDisabled}>
         last
       </Button>
       <Button onClick={() => onNewScramble(scrambleType)}>next</Button>
