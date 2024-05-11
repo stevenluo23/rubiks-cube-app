@@ -2,18 +2,18 @@ import React, { useRef, useEffect } from "react";
 import Button from "../button/Button";
 
 interface ScrambleOptionsProps {
-  prevScramble: React.MutableRefObject<string>;
   scramble: string;
   scrambleType: string;
+  prevScramble: React.MutableRefObject<string>;
   onNewScrambleType: (newScrambleType: string) => void;
-  onNewScramble: (newScramble: string) => void;
+  onNewScramble: () => void;
   onPrevScramble: () => void;
 }
 
 const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
-  prevScramble,
   scramble,
   scrambleType,
+  prevScramble,
   onNewScrambleType,
   onNewScramble,
   onPrevScramble,
@@ -21,12 +21,13 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
   const selectRef = useRef<HTMLSelectElement>(null);
   const prevScrambleTypeRef = useRef(scrambleType);
 
+  // Update previous scramble type
   useEffect(() => {
     prevScrambleTypeRef.current = scrambleType;
   }, [scrambleType]);
 
-  const handleNewScrambleType = (value: string) => {
-    onNewScrambleType(value);
+  const handleScrambleChange = (newScrambleType: string) => {
+    onNewScrambleType(newScrambleType);
     if (selectRef.current) {
       selectRef.current.blur();
     }
@@ -36,7 +37,7 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
 
   return (
     <div className="flex items-center justify-center gap-4">
-      <select ref={selectRef} className="rounded-md" value={scrambleType} onChange={(e) => handleNewScrambleType(e.target.value)}>
+      <select ref={selectRef} className="rounded-md" value={scrambleType} onChange={(e) => handleScrambleChange(e.target.value)}>
         {Array.from({ length: 5 }, (_, i) => i + 2).map((num) => (
           <option value={`${num}x${num}`} key={`${num}x${num}`}>
             {num}x{num}
@@ -46,7 +47,7 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
       <Button onClick={onPrevScramble} disabled={isLastButtonDisabled}>
         last
       </Button>
-      <Button onClick={() => onNewScramble(scrambleType)}>next</Button>
+      <Button onClick={() => onNewScramble()}>next</Button>
     </div>
   );
 };

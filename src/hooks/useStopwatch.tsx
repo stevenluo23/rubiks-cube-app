@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import useLocalStorageState from "./useLocalStorageState";
+import { useLocalStorageState } from "./useLocalStorageState";
 
-function useStopwatch() {
+export function useStopwatch() {
   const [timeMs, setTimeMs] = useLocalStorageState(0, "timerTimeMs");
   const [isRunning, setIsRunning] = useState(false);
   const timeMsRef = useRef(timeMs);
@@ -40,5 +40,3 @@ function useStopwatch() {
 
   return { timeMs, isRunning, reset, start, stop };
 }
-
-export default useStopwatch;

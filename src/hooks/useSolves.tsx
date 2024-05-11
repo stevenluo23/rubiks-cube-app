@@ -1,9 +1,9 @@
 import { Solve } from "../lib";
-import useLocalStorageState from "./useLocalStorageState";
+import { useLocalStorageState } from "./useLocalStorageState";
 import { calculateAo5 } from "../utils";
 import { v4 as uuid } from "uuid";
 
-const useSolves = () => {
+export function useSolves() {
   const [solves, setSolves] = useLocalStorageState<Solve[]>([], "solves");
 
   const handleAddSolve = (timeMs: number, scramble: string) => {
@@ -32,6 +32,4 @@ const useSolves = () => {
   };
 
   return { solves, setSolves, handleAddSolve, handleClearSolves };
-};
-
-export default useSolves;
+}

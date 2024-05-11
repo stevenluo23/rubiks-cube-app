@@ -6,7 +6,7 @@ interface KeyActions {
   keyupAction: () => void;
 }
 
-function useKeyEvents({ key, keydownAction, keyupAction }: KeyActions) {
+export function useKeyEvents({ key, keydownAction, keyupAction }: KeyActions) {
   useEffect(() => {
     const keydownCallback = (e: KeyboardEvent) => {
       if (!e.repeat && (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase())) {
@@ -29,5 +29,3 @@ function useKeyEvents({ key, keydownAction, keyupAction }: KeyActions) {
     };
   }, [key, keydownAction, keyupAction]);
 }
-
-export default useKeyEvents;

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const useModal = () => {
+export function useModal() {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
 
@@ -20,6 +20,4 @@ const useModal = () => {
   };
 
   return { modalRef, modalContent, setModalContent, toggleModal };
-};
-
-export default useModal;
+}

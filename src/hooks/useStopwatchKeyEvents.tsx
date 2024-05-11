@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import useKeyEvents from "./useKeyEvents";
+import { useKeyEvents } from "./useKeyEvents";
 
-const useTimerKeyEvents = (
+export function useStopwatchKeyEvents(
   isRunning: boolean,
   timeMs: number,
   start: () => void,
@@ -9,7 +9,7 @@ const useTimerKeyEvents = (
   reset: () => void,
   addSolve: (timeMs: number) => void,
   toggleDashboard: () => void,
-) => {
+) {
   const [isKeyDown, setIsKeyDown] = useState(false);
   const [wasStopped, setWasStopped] = useState(false);
   const [canStart, setCanStart] = useState(true);
@@ -74,6 +74,4 @@ const useTimerKeyEvents = (
   });
 
   return { isKeyDown, wasStopped, handleKeyDownAction, handleKeyUpaction };
-};
-
-export default useTimerKeyEvents;
+}

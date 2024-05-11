@@ -1,7 +1,7 @@
 import { Solve } from "../../lib";
-import useTimer from "../../hooks/useStopwatch";
+import { useStopwatch } from "../../hooks/useStopwatch";
 import TimerDisplay from "./TimerDisplay";
-import useTimerKeyEvents from "../../hooks/useTimerKeyEvents";
+import { useStopwatchKeyEvents } from "../../hooks/useStopwatchKeyEvents";
 
 interface TimerProps {
   solves: Solve[];
@@ -10,9 +10,9 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ solves, addSolve, toggleDashboard }) => {
-  const { timeMs, isRunning, reset, start, stop } = useTimer();
+  const { timeMs, isRunning, reset, start, stop } = useStopwatch();
 
-  const { isKeyDown, wasStopped, handleKeyDownAction, handleKeyUpaction } = useTimerKeyEvents(
+  const { isKeyDown, wasStopped, handleKeyDownAction, handleKeyUpaction } = useStopwatchKeyEvents(
     isRunning,
     timeMs,
     start,

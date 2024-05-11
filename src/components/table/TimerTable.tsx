@@ -3,8 +3,8 @@ import { Solve } from "../../lib";
 import Button from "../button/Button";
 import ModalWindow from "../modal/ModalWindow";
 import { calculateAo5 } from "../../utils";
-import useDisableKeys from "../../hooks/useDisableKeys";
-import useModal from "../../hooks/useModal";
+import { useDisableKeys } from "../../hooks/useDisableKeys";
+import { useModal } from "../../hooks/useModal";
 import ConfirmModalContent from "../modal/ConfirmModalContent";
 import SolvesTable from "./SolvesTable";
 

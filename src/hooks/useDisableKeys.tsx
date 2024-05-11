@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useDisableKeys = (isDisabled: () => boolean, keysToDisable: string[]) => {
+export function useDisableKeys(isDisabled: () => boolean, keysToDisable: string[]) {
   useEffect(() => {
     const disableKeyboardInput = (event: KeyboardEvent) => {
       if (keysToDisable.includes(event.key) && isDisabled()) {
@@ -14,6 +14,4 @@ const useDisableKeys = (isDisabled: () => boolean, keysToDisable: string[]) => {
       window.removeEventListener("keydown", disableKeyboardInput, true);
     };
   }, [isDisabled, keysToDisable]);
-};
-
-export default useDisableKeys;
+}
