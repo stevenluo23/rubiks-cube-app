@@ -15,9 +15,9 @@ const RubiksTimerPage = () => {
 
   return (
     <div style={{ height: "calc(100svh - env(safe-area-inset-bottom))" }} className="absolute z-0 w-full touch-none select-none">
-      <div className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
+      <aside className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
         <Sidebar navComponent={<Nav />} timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} setSolves={setSolves} />} />
-      </div>
+      </aside>
       <Main solves={solves} isRunning={isRunning} onAddSolve={handleAddSolve} onToggleDashboard={handleToggleDashboard} />
     </div>
   );

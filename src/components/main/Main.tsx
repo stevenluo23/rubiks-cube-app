@@ -25,7 +25,7 @@ const Main: React.FC<MainProps> = ({ solves, isRunning, onAddSolve, onToggleDash
   };
 
   return (
-    <>
+    <main>
       <div className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
         <ScrambleDisplay>
           <ScrambleOptions
@@ -39,13 +39,13 @@ const Main: React.FC<MainProps> = ({ solves, isRunning, onAddSolve, onToggleDash
           <span className="text-xl sm:text-4xl">{scramble}</span>
         </ScrambleDisplay>
         {shouldRenderCube ? (
-          <div className="absolute bottom-0 right-0 z-20 rounded-[0.35rem] border-[0.15rem] border-solid border-slate-200 bg-slate-300 p-[0.3rem] max-lg:bottom-[11.8vw]">
+          <figure className="absolute bottom-0 right-0 z-20 rounded-[0.35rem] border-[0.15rem] border-solid border-slate-200 bg-slate-300 p-[0.3rem] max-lg:bottom-[11.8vw]">
             <DisplayCube cube={myCube} size={6} />
-          </div>
+          </figure>
         ) : null}
       </div>
       <Timer solves={solves} addSolve={handleAddSolveAndGenerateNewScramble} toggleDashboard={onToggleDashboard} />
-    </>
+    </main>
   );
 };
 

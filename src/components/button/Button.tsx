@@ -35,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, children, backgroundColor = "b
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       disabled={disabled}
+      aria-disabled={disabled}
     >
       {children}
     </button>

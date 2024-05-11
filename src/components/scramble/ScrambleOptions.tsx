@@ -21,7 +21,6 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
   const selectRef = useRef<HTMLSelectElement>(null);
   const prevScrambleTypeRef = useRef(scrambleType);
 
-  // Update previous scramble type
   useEffect(() => {
     prevScrambleTypeRef.current = scrambleType;
   }, [scrambleType]);
@@ -37,7 +36,17 @@ const ScrambleOptions: React.FC<ScrambleOptionsProps> = ({
 
   return (
     <div className="flex items-center justify-center gap-4">
-      <select ref={selectRef} className="rounded-md" value={scrambleType} onChange={(e) => handleScrambleChange(e.target.value)}>
+      <label htmlFor="scrambleTypeSelect" className="sr-only">
+        Scramble Type
+      </label>
+      <select
+        id="scrambleTypeSelect"
+        ref={selectRef}
+        className="rounded-md"
+        value={scrambleType}
+        onChange={(e) => handleScrambleChange(e.target.value)}
+        aria-label="Select Scramble Type"
+      >
         {Array.from({ length: 5 }, (_, i) => i + 2).map((num) => (
           <option value={`${num}x${num}`} key={`${num}x${num}`}>
             {num}x{num}
