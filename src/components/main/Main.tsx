@@ -9,10 +9,10 @@ interface MainProps {
   solves: Solve[];
   isRunning: boolean;
   onAddSolve: (timeMs: number, scramble: string) => void;
-  onToggleDashboard: () => void;
+  onToggleSidebar: () => void;
 }
 
-const Main: React.FC<MainProps> = ({ solves, isRunning, onAddSolve, onToggleDashboard }) => {
+const Main: React.FC<MainProps> = ({ solves, isRunning, onAddSolve, onToggleSidebar }) => {
   const { scramble, prevScramble, scrambleType, handleNewScrambleType, handleNewScramble, handlePrevScramble } = useScramble();
   const myCube: Cube = applyScramble({ type: scrambleType, scramble: scramble });
 
@@ -44,7 +44,7 @@ const Main: React.FC<MainProps> = ({ solves, isRunning, onAddSolve, onToggleDash
           </figure>
         ) : null}
       </div>
-      <Timer solves={solves} addSolve={handleAddSolveAndGenerateNewScramble} toggleDashboard={onToggleDashboard} />
+      <Timer solves={solves} addSolve={handleAddSolveAndGenerateNewScramble} toggleSidebar={onToggleSidebar} />
     </main>
   );
 };

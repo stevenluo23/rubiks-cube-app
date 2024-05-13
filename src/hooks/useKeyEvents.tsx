@@ -1,23 +1,20 @@
 import { useEffect } from "react";
 
 interface KeyActions {
-  key: string;
-  keydownAction: () => void;
-  keyupAction: () => void;
+  keydownAction: (e: KeyboardEvent) => void;
+  keyupAction: (e: KeyboardEvent) => void;
 }
 
-export function useKeyEvents({ key, keydownAction, keyupAction }: KeyActions) {
+export function useKeyEvents({ keydownAction, keyupAction }: KeyActions) {
   useEffect(() => {
     const keydownCallback = (e: KeyboardEvent) => {
-      if (!e.repeat && (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase())) {
-        keydownAction();
+      if (!e.repeat) {
+        keydownAction(e);
       }
     };
 
     const keyupCallback = (e: KeyboardEvent) => {
-      if (key.toLowerCase() === "any" || e.key.toLowerCase() === key.toLowerCase()) {
-        keyupAction();
-      }
+      keyupAction(e);
     };
 
     document.addEventListener("keydown", keydownCallback);
@@ -27,5 +24,5 @@ export function useKeyEvents({ key, keydownAction, keyupAction }: KeyActions) {
       document.removeEventListener("keydown", keydownCallback);
       document.removeEventListener("keyup", keyupCallback);
     };
-  }, [key, keydownAction, keyupAction]);
+  }, [keydownAction, keyupAction]);
 }

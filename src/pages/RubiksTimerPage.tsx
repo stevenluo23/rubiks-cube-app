@@ -9,7 +9,7 @@ const RubiksTimerPage = () => {
   const { solves, setSolves, handleAddSolve, handleClearSolves } = useSolves();
   const [isRunning, setIsRunning] = useState(false);
 
-  const handleToggleDashboard = () => {
+  const handleToggleSidebar = () => {
     setIsRunning(!isRunning);
   };
 
@@ -18,7 +18,7 @@ const RubiksTimerPage = () => {
       <aside className={`transition-opacity duration-500 ${isRunning ? "opacity-0" : "opacity-100"}`}>
         <Sidebar navComponent={<Nav />} timerTableComponent={<TimerTable solves={solves} clearSolves={handleClearSolves} setSolves={setSolves} />} />
       </aside>
-      <Main solves={solves} isRunning={isRunning} onAddSolve={handleAddSolve} onToggleDashboard={handleToggleDashboard} />
+      <Main solves={solves} isRunning={isRunning} onAddSolve={handleAddSolve} onToggleSidebar={handleToggleSidebar} />
     </div>
   );
 };

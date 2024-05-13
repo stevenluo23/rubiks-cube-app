@@ -8,70 +8,121 @@ export function useStopwatchKeyEvents(
   stop: () => void,
   reset: () => void,
   addSolve: (timeMs: number) => void,
-  toggleDashboard: () => void,
+  toggleSidebar: () => void,
 ) {
-  const [isKeyDown, setIsKeyDown] = useState(false);
   const [wasStopped, setWasStopped] = useState(false);
-  const [canStart, setCanStart] = useState(true);
-  const keyHeldRef = useRef(false);
-  const escapeKeyRef = useRef(false);
+  const [canStart, setCanStart] = useState(false);
+  const [isKeyDown, setIsKeyDown] = useState(false);
+  const keyDownRef = useRef(false);
+  const timeoutRef = useRef<number | null>(null);
 
-  const handleKeyDownAction = () => {
-    keyHeldRef.current = true;
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    setIsKeyDown(true);
+    keyDownRef.current = true;
+
     if (isRunning) {
       stop();
-      toggleDashboard();
-
-      // Styling for TimerDisplay
       setWasStopped(true);
-      setTimeout(() => {
-        setWasStopped(false);
-      }, 100);
-
-      // Prevent user from restarting immediately after stopping
+      toggleSidebar();
       setCanStart(false);
-      setTimeout(() => {
-        setCanStart(true);
-      }, 700);
-
       addSolve(timeMs);
-    } else if (!isKeyDown && canStart) {
-      setIsKeyDown(true);
+    } else {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        if (keyDownRef.current) {
+          setCanStart(true);
+        }
+      }, 350);
     }
   };
 
-  const handleKeyUpaction = () => {
-    keyHeldRef.current = false;
-    // Avoids starting the timer on release if the ESC key was hit
-    if (isKeyDown && canStart && !escapeKeyRef.current) {
+  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    setIsKeyDown(false);
+    keyDownRef.current = false;
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    if (canStart) {
       reset();
-      setIsKeyDown(false); // Changes styling for TimerDisplay
       start();
-
-      toggleDashboard();
+      toggleSidebar();
+      setCanStart(false);
+    } else if (wasStopped) {
+      setWasStopped(false);
     }
   };
 
-  // Start timer on spacebar, stop on any key
+  const handleKeyDownAction = (e: KeyboardEvent) => {
+    if (e.key === " " || isRunning) {
+      // Set isKeyDown to true to initiate timer styling
+      setIsKeyDown(true);
+      keyDownRef.current = true;
+    }
+
+    // Case when the user stops the timer
+    if (isRunning) {
+      stop();
+      setWasStopped(true);
+      toggleSidebar();
+      setCanStart(false);
+      addSolve(timeMs);
+    } else if (e.key === " ") {
+      // Clear any existing timeout to prevent multiple starts
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      // Set a timeout to allow the user to hold the spacebar to start the timer
+      timeoutRef.current = setTimeout(() => {
+        if (keyDownRef.current) {
+          setCanStart(true);
+        }
+      }, 350);
+    } else if (e.key === "Escape") {
+      // Reset timer display to 0.00 when key is not held
+      if (!isKeyDown) {
+        reset();
+      } else {
+        // Exit the timer when the escape key is pressed
+        setCanStart(false);
+        setIsKeyDown(false);
+        keyDownRef.current = false;
+      }
+    }
+  };
+
+  const handleKeyUpaction = (e: KeyboardEvent) => {
+    if (e.key === " " || wasStopped) {
+      setIsKeyDown(false);
+      setWasStopped(false);
+      keyDownRef.current = false;
+
+      // Clear the timeout when the key is released to prevent starting the timer
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Note: this will not run when the Escape key is hit
+      if (canStart && e.key === " ") {
+        // Clear timer display
+        reset();
+        start();
+
+        // Hide sidebar
+        toggleSidebar();
+        setCanStart(false);
+      }
+    }
+  };
+
+  // Start timer on spacebar, stop on any key, reset on escape
   useKeyEvents({
-    key: isRunning ? "any" : " ",
     keydownAction: handleKeyDownAction,
     keyupAction: handleKeyUpaction,
   });
 
-  // Prevent timer from starting when the user presses escape
-  useKeyEvents({
-    key: "Escape",
-    keydownAction: () => {
-      if (!keyHeldRef.current) {
-        reset();
-      }
-      setIsKeyDown(false);
-      keyHeldRef.current = false;
-      escapeKeyRef.current = true;
-    },
-    keyupAction: () => (escapeKeyRef.current = false),
-  });
-
-  return { isKeyDown, wasStopped, handleKeyDownAction, handleKeyUpaction };
+  return { isKeyDown, wasStopped, canStart, handleTouchStart, handleTouchEnd };
 }
